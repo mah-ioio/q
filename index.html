@@ -97,8 +97,16 @@
 						<div class="modal-body">
 							<form>
 								<div class="form-group">
-									<label class="sr-only" for="signup-name">Name</label>
-									<input type="email" class="form-control" id="signup-name" placeholder="Name">
+									<label class="sr-only" for="signup-firstname">First name</label>
+									<input type="text" class="form-control" id="signup-first-name" placeholder="First name">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-lastname">Last name</label>
+									<input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-course">Course</label>
+									<input type="text" class="form-control" id="signup-course" placeholder="Course">
 								</div>
 								<div class="form-group">
 									<label class="sr-only" for="signup-email">Email address</label>
@@ -115,7 +123,7 @@
 											<button id="signup-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
 										</div>
 									</div>
-								</div
+								</div>
 							</form>
 							<div id="signup-alert"></div>
 						</div>
@@ -204,6 +212,17 @@
 				<br>
 				<p>Welcome to the Q</p>
 				<br>
+				<form>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
+								<button id="queue-button" type="button" class="btn btn-success btn-block btn-lg">Need help?</button>
+							</div>
+							<div class="col-xs-2"></div>
+						</div>
+					</div>
+				</form>
 			</div>
 
 			<!-- STICKY FOOTER -->
@@ -238,7 +257,10 @@
 			};
 
 			var user = {
-				name: undefined,
+				name: {
+					first: undefined,
+					last: undefined
+				},
 				mail: undefined,
 				password: undefined,
 				uid: undefined,
@@ -259,10 +281,16 @@
 					setButtonListeners();
 				},
 				signup: function(){
-					user.name = $("#signup-name").val().toLowerCase();
+					user.name.first = $("#signup-first-name").val().toLowerCase();
+					user.name.last = $("#signup-last-name").val().toLowerCase();
+					user.course = $("#signup-course").val().toLowerCase();
 					user.mail = $("#signup-mail").val().toLowerCase();
 					user.password = $("#signup-password").val();
-					auth.signup(user.name, user.mail, user.password);
+					if(user.name.first === "" || user.mail === "" || user.password === ""){
+						displayAlert("#signup-alert","Please fill out all fields","alert-warning");
+					} else {
+						auth.signup(user.name.first, user.mail, user.password);
+					}
 				},
 				login: function(){
 					user.mail = $("#login-mail").val().toLowerCase();
@@ -299,8 +327,17 @@
 							user.uid = userData.uid;
 							$("#q-signup-modal").modal("hide");
 							$("#q-success-modal").modal("show");
+
 							//TODO set up a new user in firebase
 							firebase.user = firebase.users.child(user.uid);
+							firebase.user.set({
+								name: {
+									first: user.name.first,
+									last: user.name.last
+								},
+								course: user.course,
+								ticket: "0"
+							});
 						}
 					});
 				},
@@ -323,6 +360,16 @@
 					    console.log("Login Failed!", error);
 					  } else {
 							console.log("Authenticated successfully with payload:", authData);
+
+							user.uid = authData.uid;
+							firebase.user = firebase.users.child(user.uid);
+							firebase.user.once("value", function(data){
+								user.name.first = data.name.first;
+								user.name.last = data.name.last;
+								user.course = data.course;
+								user.queue = data.ticket;
+							});
+
 							$("#q-login-modal").modal("hide");
 							$("#page-main").toggle();
 							$("#page-app").toggle();
@@ -335,6 +382,8 @@
 			}
 
 
+
+			//TODO validate password
 			function validatePassword(){
 
 			}
@@ -347,18 +396,32 @@
 
 			//TODO knockout firebase queue listener, check all users ticket value
 			function setQueueListener(){
+				users.orderByValue().on("value", function(snapshot) {
+					console.log(snapshot.val());
+					snapshot.forEach(function(data){
+
+					});
+				}, function (errorObject) {
+				  console.log("The read failed: " + errorObject.code);
+				});
 			}
 
+			//TODO draw queue method
+			
+
 			function displayAlert(query, msg, type) {
-				var wordArr =["Ops!", "Darn!", "Uh-oh...", "Err.", "Hm...", "It's probably not you, but...", "Ehh...", "Great Scott!"];
+				var wordArr =["Ops!", "Darn!", "Uh-oh...", "Err.", "Hm...", "It's probably not you, but...", "Ehh...", "Great Scott!", "Well..."];
 
 				$(query).append('<div id="alert-div" class="alert fade in ' + type + '"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span><strong>' + wordArr[Math.floor(Math.random() * wordArr.length)] + '</strong> ' + msg + '</span>')
 
 				setTimeout(function() {
 					$("#alert-div").remove();
-				}, 8000);
+				}, 6000);
 			}
 
+			//TODO write proper security rules
+			//TODO jquery hasher check so that a user can go directly into their app
+			//TODO store security token in cookie and retrive it on page load
 
 		</script>
 
