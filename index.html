@@ -45,6 +45,8 @@
 			#page-app{display: none;}
 			#page-settings{display: none;}
 
+			.template{}
+
 		</style>
 	</head>
 	<body>
@@ -197,7 +199,7 @@
 		<!-- APP VIEW -->
 		<div id="page-app" class="container-fluid">
 
-			<!-- FIXED NAVBAR -->
+			<!-- FIXED NAVBAR-->
 			<nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container">
 					<div class="navbar-header">
@@ -207,11 +209,13 @@
 			</nav>
 
 			<!-- CONTENT -->
-			<div class="jumbotron center">
-				<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
-				<br>
-				<p>Welcome to the Q</p>
-				<br>
+			<div class="jumbotron">
+				<div class="center">
+					<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
+					<br>
+					<p>Welcome to the Q</p>
+					<br>
+				</div>
 				<form>
 					<div class="form-group">
 						<div class="row">
@@ -223,6 +227,48 @@
 						</div>
 					</div>
 				</form>
+				<div id="queue-div">
+					<div id="queue-template" class="template panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					  <div class="panel panel-default">
+					    <div class="panel-heading" role="tab" id="headingOne">
+								<div class="row">
+									<div class="col-xs-2">
+										<h4 class="panel-title"><strong>1</strong></h4>
+									</div>
+									<div class="col-xs-7">
+										<h4 class="panel-title">
+							        <a class="collapsed btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+												Jesper Andersson
+							        </a>
+							      </h4>
+									</div>
+									<div class="col-xs-3">
+										<div class="dropdown">
+										  <button id="dLabel" class="btn btn-default btn-md btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span class="glyphicon glyphicon-cog"></span>
+										    <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+												<li><a href="#"><span class="glyphicon glyphicon-ok text-success"></span> Help</a></li>
+												<li role="separator" class="divider"></li>
+												<li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span> Move one up</a></li>
+										    <li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Move one down</a></li>
+										    <li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Push to last</a></li>
+										    <li role="separator" class="divider"></li>
+										    <li><a href="#"><span class="glyphicon glyphicon-remove text-danger"></span> Remove from queue</a></li>
+										  </ul>
+										</div>
+									</div>
+								</div>
+					    </div>
+					    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+					      <div class="panel-body">
+									Help with cutting
+					      </div>
+					    </div>
+					  </div>
+					</div>
+				</div>
 			</div>
 
 			<!-- STICKY FOOTER -->
@@ -296,6 +342,9 @@
 					user.mail = $("#login-mail").val().toLowerCase();
 					user.password = $("#login-password").val();
 					auth.login(user.mail, user.password);
+				},
+				getTicket: function(){
+					firebase.user.update({ticket: Date.now()});
 				}
 			}
 
@@ -391,23 +440,24 @@
 			function setButtonListeners(){
 				$("#signup-button").on("click", app.signup)
 				$("#login-button").on("click", app.login)
+				$("#queue-button").on("click", app.getTicket)
 			}
 
 
 			//TODO knockout firebase queue listener, check all users ticket value
 			function setQueueListener(){
-				users.orderByValue().on("value", function(snapshot) {
-					console.log(snapshot.val());
-					snapshot.forEach(function(data){
 
+				firebase.users.orderByValue().on("value", function(snapshot){
+					snapshot.forEach(function(data){
+						data.child("ticket").val();
 					});
-				}, function (errorObject) {
-				  console.log("The read failed: " + errorObject.code);
+				},function(error){
+					console.log("The read failed: " + error.code);
 				});
 			}
 
 			//TODO draw queue method
-			
+
 
 			function displayAlert(query, msg, type) {
 				var wordArr =["Ops!", "Darn!", "Uh-oh...", "Err.", "Hm...", "It's probably not you, but...", "Ehh...", "Great Scott!", "Well..."];
