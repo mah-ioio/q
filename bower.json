@@ -1,0 +1,25 @@
+{
+  "name": "q-bootstrap-login",
+  "authors": [
+    "Jesper Andersson <jsprA86@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.1.4",
+    "firebase": "~2.3.2",
+    "animate.css": "~3.4.0",
+    "knockout": "~3.4.0"
+  }
+}
