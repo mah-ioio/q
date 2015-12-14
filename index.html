@@ -419,6 +419,8 @@
 								user.queue = data.ticket;
 							});
 
+							queue.setListener();
+
 							$("#q-login-modal").modal("hide");
 							$("#page-main").toggle();
 							$("#page-app").toggle();
@@ -438,28 +440,75 @@
 			}
 
 			function setButtonListeners(){
-				$("#signup-button").on("click", app.signup)
-				$("#login-button").on("click", app.login)
-				$("#queue-button").on("click", app.getTicket)
-			}
-
-
-			//TODO knockout firebase queue listener, check all users ticket value
-			function setQueueListener(){
-
-				firebase.users.orderByValue().on("value", function(snapshot){
-					snapshot.forEach(function(data){
-						data.child("ticket").val();
-					});
-				},function(error){
-					console.log("The read failed: " + error.code);
+				$("#signup-button").on("click", app.signup);
+				$("#login-button").on("click", app.login);
+				$("#queue-button").on("click", app.getTicket);
+				//modal enter key
+				$(document).on( "keydown", function(event) {
+					if(event.which == 13){
+						if ($("#q-signup-modal").is(":visible")) {
+						  app.signup;
+						} else if ($("#q-login-modal").is(":visible")){
+							app.login;
+						} else if($("#q-success-modal").is(":visible")){
+							$("#q-success-modal").modal("hide");
+							$("#q-login-modal").modal("show");
+						}
+						/*
+						if($(element).css('display') == 'none' ){
+	    				// element is hidden
+						}*/
+					}
 				});
 			}
 
-			//TODO draw queue method
-
-
-			function displayAlert(query, msg, type) {
+			var queue = {
+				arr: [],
+				setListener: function(){
+					firebase.users.orderByValue().on("value", function(snapshot){
+						queue.reset();
+						snapshot.forEach(function(data){
+							if(data.child("ticket").val() != 0 && data.child("ticket").val() !== null){
+								//console.log(data.child("ticket").val());
+								queue.pushTo(data);
+							}
+						});
+						queue.sortQueue();
+						queue.draw();
+					},function(error){
+						console.log("The read failed: " + error.code);
+					});
+				},
+				pushTo: function(obj){
+					queue.arr.push({
+						/*name: {
+							first: obj.child("name/first").val(),
+							last: obj.child("name/last").val()
+						},*/
+						ticket: obj.child("ticket").val()
+					});
+				},
+				sortQueue: function(){
+					queue.arr.sort(dynamicSort("ticket"));
+					//console.log(queue.arr);
+				},
+				//TODO draw queue method
+				draw: function(){
+					$("#queue-div").empty();
+					for(var i = 0; i < queue.arr.length; i++){
+						var template = [
+							"<div>",
+								"<h2>Hej!!!!</h2><h4>",
+								queue.arr[i].ticket,
+							"</h4></div>"
+						].join("\n");
+						$("#queue-div").append(template);
+					}
+				},
+				reset: function(){
+					queue.arr.length = 0;
+				}
+			} function displayAlert(query, msg, type) {
 				var wordArr =["Ops!", "Darn!", "Uh-oh...", "Err.", "Hm...", "It's probably not you, but...", "Ehh...", "Great Scott!", "Well..."];
 
 				$(query).append('<div id="alert-div" class="alert fade in ' + type + '"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span><strong>' + wordArr[Math.floor(Math.random() * wordArr.length)] + '</strong> ' + msg + '</span>')
@@ -469,9 +518,24 @@
 				}, 6000);
 			}
 
+			//as found at http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
+			//use as: Array.sort(dynamicSort("property"));
+			function dynamicSort(property) {
+				var sortOrder = 1;
+				if(property[0] === "!") {
+					sortOrder = -1;
+					property = property.substr(1);
+				}
+				return function (a,b) {
+					var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+					return result * sortOrder;
+				}
+			}
+
 			//TODO write proper security rules
 			//TODO jquery hasher check so that a user can go directly into their app
 			//TODO store security token in cookie and retrive it on page load
+			//TODO admin interface
 
 		</script>
 
