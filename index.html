@@ -31,7 +31,7 @@
 				color: #5CB85C;
 			}
 			footer {
-				position: absolute;
+				position: fixed;
 				bottom: 0;
 				left: 0;
 				width: 100%;
@@ -210,81 +210,32 @@
 
 			<!-- CONTENT -->
 			<div class="jumbotron">
-				<div class="center">
-					<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
-					<br>
-					<p>Welcome to the Q</p>
-					<br>
-				</div>
-				<form>
+
+				<form id="get-help">
 					<div class="form-group">
 						<div class="row">
 							<div class="col-xs-2"></div>
 							<div class="col-xs-8">
-								<button id="queue-button" type="button" class="btn btn-success btn-block btn-lg">Need help?</button>
+								<button id="get-help-button" type="button" class="btn btn-success btn-block btn-lg">Need help?</button>
 							</div>
 							<div class="col-xs-2"></div>
 						</div>
 					</div>
 				</form>
-				<div id="queue-div" class="panel panel-default">
-					<div class="panel-heading">
-				    <h3 class="panel-title">Queue</h3>
-				  </div>
-				  <div class="panel-body">
-						<ul class="list-group">
-							<li class="list-group-item">1 Cras justo odio</li>
-						  <li class="list-group-item">2 Dapibus ac facilisis in</li>
-						  <li class="list-group-item">3 Morbi leo risus</li>
-						  <li class="list-group-item">4 Porta ac consectetur ac</li>
-						  <li class="list-group-item">5 Vestibulum at eros</li>
-						</ul>
-				  </div>
+
+				<form id="end-help">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
+								<button id="end-help-button" type="button" class="btn btn-warning btn-block btn-lg">Step out</button>
+							</div>
+							<div class="col-xs-2"></div>
+						</div>
+					</div>
+				</form>
 
 
-					<!-- not used template
-					<div id="queue-template" class="template panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-					  <div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingOne">
-								<div class="row">
-									<div class="col-xs-2">
-										<h4 class="panel-title"><strong>1</strong></h4>
-									</div>
-									<div class="col-xs-7">
-										<h4 class="panel-title">
-							        <a class="collapsed btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-												Jesper Andersson
-							        </a>
-							      </h4>
-									</div>
-									<div class="col-xs-3">
-										<div class="dropdown">
-										  <button id="dLabel" class="btn btn-default btn-md btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										    <span class="glyphicon glyphicon-cog"></span>
-										    <span class="caret"></span>
-										  </button>
-										  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
-												<li><a href="#"><span class="glyphicon glyphicon-ok text-success"></span> Help</a></li>
-												<li role="separator" class="divider"></li>
-												<li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span> Move one up</a></li>
-										    <li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Move one down</a></li>
-										    <li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Push to last</a></li>
-										    <li role="separator" class="divider"></li>
-										    <li><a href="#"><span class="glyphicon glyphicon-remove text-danger"></span> Remove from queue</a></li>
-										  </ul>
-										</div>
-									</div>
-								</div>
-					    </div>
-					    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-					      <div class="panel-body">
-									Help with cutting
-					      </div>
-					    </div>
-					  </div>
-					</div> -->
-
-				</div>
 			</div>
 
 			<!-- STICKY FOOTER -->
@@ -324,9 +275,9 @@
 					last: undefined
 				},
 				mail: undefined,
-				password: undefined,
 				uid: undefined,
-				queue: undefined
+				queue: undefined,
+				password: undefined
 			};
 
 			//TODO knockout view model
@@ -340,7 +291,28 @@
 				init: function(){
 					firebase.root = new Firebase("https://mah-space-mono.firebaseio.com");
 					firebase.users = firebase.root.child("users");
+					console.log(firebase.root.toString());
+					console.log(firebase.users.toString());
 					setButtonListeners();
+
+					/**
+						Set a listener on the clients auth state and change views
+							depending on if authData is null > main page
+							or if authData returns the auth object > app page
+						No viewchange necessary in login/logout
+					**/
+					//TODO move page view change into onAuth callback
+					firebase.root.onAuth(function(authData){
+						if(authData){
+						  console.log("Authenticated user with uid:", authData.uid);
+							user.uid = authData.uid;
+							//change view here
+						} else {
+							console.log("No auth");
+							//change view here
+						}
+					});
+
 				},
 				signup: function(){
 					user.name.first = $("#signup-first-name").val().toLowerCase();
@@ -348,6 +320,7 @@
 					user.course = $("#signup-course").val().toLowerCase();
 					user.mail = $("#signup-mail").val().toLowerCase();
 					user.password = $("#signup-password").val();
+					//TODO validate this with firebase security instead IF an error message that is clear for the user can be presented
 					if(user.name.first === "" || user.mail === "" || user.password === ""){
 						displayAlert("#signup-alert","Please fill out all fields","alert-warning");
 					} else {
@@ -359,8 +332,14 @@
 					user.password = $("#login-password").val();
 					auth.login(user.mail, user.password);
 				},
+				logout: function(){
+					firebase.root.unauth();
+				},
 				getTicket: function(){
 					firebase.user.update({ticket: Date.now()});
+				},
+				removeTicket: function(){
+					firebase.user.update({ticket: 0});
 				}
 			}
 
@@ -390,19 +369,24 @@
 						} else {
 							console.log("Successfully created user account with uid:", userData.uid);
 							user.uid = userData.uid;
-							$("#q-signup-modal").modal("hide");
-							$("#q-success-modal").modal("show");
 
 							//TODO set up a new user in firebase
-							firebase.user = firebase.users.child(user.uid);
+							firebase.user = firebase.users.child(userData.uid);
+
 							firebase.user.set({
 								name: {
 									first: user.name.first,
 									last: user.name.last
 								},
 								course: user.course,
-								ticket: "0"
+								ticket: "0",
+								account: "limited"
 							});
+
+							//TODO log in user automatically after successfully registration
+							$("#q-signup-modal").modal("hide");
+							$("#q-success-modal").modal("show");
+
 						}
 					});
 				},
@@ -429,10 +413,24 @@
 							user.uid = authData.uid;
 							firebase.user = firebase.users.child(user.uid);
 							firebase.user.once("value", function(data){
-								user.name.first = data.name.first;
-								user.name.last = data.name.last;
-								user.course = data.course;
-								user.queue = data.ticket;
+								if(data.val()){
+									user.name.first = data.name.first;
+									user.name.last = data.name.last;
+									user.course = data.course;
+									console.log("found data");
+								} else {
+									console.log("creating data");
+									firebase.user.set({
+										name: {
+											first: "exampleName",//user.name.first,
+											last: "exampleNameLast"//user.name.last
+										},
+										course: "exampleCourse",//user.course,
+										ticket: "0",
+										account: "limited"
+									});
+								}
+
 							});
 
 							queue.setListener();
@@ -458,8 +456,11 @@
 			function setButtonListeners(){
 				$("#signup-button").on("click", app.signup);
 				$("#login-button").on("click", app.login);
-				$("#queue-button").on("click", app.getTicket);
+				$("#get-help-button").on("click", app.getTicket);
+				$("#end-help-button").on("click", app.removeTicket);
+
 				//modal enter key
+				/*
 				$(document).on( "keydown", function(event) {
 					if(event.which == 13){
 						if ($("#q-signup-modal").is(":visible")) {
@@ -470,19 +471,20 @@
 							$("#q-success-modal").modal("hide");
 							$("#q-login-modal").modal("show");
 						}
-						/*
+
 						if($(element).css('display') == 'none' ){
 	    				// element is hidden
-						}*/
+						}
 					}
-				});
+				});*/
 			}
 
 			var queue = {
 				arr: [],
 				setListener: function(){
-					firebase.users.orderByValue().on("value", function(snapshot){
+					firebase.users.on("value", function(snapshot){
 						queue.reset();
+						console.log("New queue read");
 						snapshot.forEach(function(data){
 							if(data.child("ticket").val() != 0 && data.child("ticket").val() !== null){
 								//console.log(data.child("ticket").val());
@@ -490,6 +492,7 @@
 							}
 						});
 						queue.sortQueue();
+						user.queue = queue.findTicket(user.uid);
 						queue.draw();
 					},function(error){
 						console.log("The read failed: " + error.code);
@@ -501,6 +504,7 @@
 							first: obj.child("name/first").val(),
 							last: obj.child("name/last").val()
 						},*/
+						uid: obj.key(),
 						ticket: obj.child("ticket").val()
 					});
 				},
@@ -508,52 +512,23 @@
 					queue.arr.sort(dynamicSort("ticket"));
 					//console.log(queue.arr);
 				},
+				findTicket: function(uid){
+					queue.arr.forEach(function(entry, index){
+						if(entry.uid === uid){
+							return (index + 1);
+						} else {
+							return 0;
+						}
+					});
+				},
 				//TODO draw queue method
 				draw: function(){
+
 					/*
 					$("#queue-div").empty();
 					for(var i = 0; i < queue.arr.length; i++){
 						var template = [
-							'<div id="queue-template" class="template panel-group" id="accordion" role="tablist" aria-multiselectable="true">',
-							  '<div class="panel panel-default">',
-							    '<div class="panel-heading" role="tab" id="headingOne">',
-										'<div class="row">',
-											'<div class="col-xs-2">',
-												'<h4 class="panel-title"><strong>1</strong></h4>',
-											'</div>',
-											'<div class="col-xs-7">',
-												'<h4 class="panel-title">',
-									        '<a class="collapsed btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">',
-														'Jesper Andersson',
-									        '</a>',
-									      '</h4>',
-											'</div>',
-											'<div class="col-xs-3">',
-												'<div class="dropdown">',
-												  '<button id="dLabel" class="btn btn-default btn-md btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">',
-												    '<span class="glyphicon glyphicon-cog"></span>',
-												    '<span class="caret"></span>',
-												  '</button>',
-												  '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">',
-														'<li><a href="#"><span class="glyphicon glyphicon-ok text-success"></span> Help</a></li>',
-														'<li role="separator" class="divider"></li>',
-														'<li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span> Move one up</a></li>',
-												    '<li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Move one down</a></li>',
-												    '<li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Push to last</a></li>',
-												    '<li role="separator" class="divider"></li>',
-												    '<li><a href="#"><span class="glyphicon glyphicon-remove text-danger"></span> Remove from queue</a></li>',
-												  '</ul>',
-												'</div>',
-											'</div>',
-										'</div>',
-							    '</div>',
-							    '<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">',
-							      '<div class="panel-body">',
-											'Help with cutting',
-							      '</div>',
-							    '</div>',
-							  '</div>',
-							'</div>'
+
 						].join("\n");
 						$("#queue-div").append(template);
 					}*/
@@ -587,14 +562,10 @@
 				}
 			}
 
-			function findTicket(uid){
-				
-			}
 
-			//TODO write proper security rules
 			//TODO jquery hasher check so that a user can go directly into their app
-			//TODO store security token in cookie and retrive it on page load
 			//TODO admin interface
+			//TODO password reset button and method
 
 		</script>
 
