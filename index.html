@@ -3,46 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Q app</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no"/>
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="bower_components/animate.css/animate.css">
-		<style>
-			html {
-				position: relative;
-				min-height: 100%;
-			}
-			body {
-				padding-top: 70px;
-				margin-bottom: 40px;
-			}
-			.brand-text {
-				font-family: monospace;
-			}
-			#signup-success-message {
-				margin-bottom: 24px;
-			}
-			#signup-success-message span {
-				font-size: 36px;
-				margin: 20px 0px 24px 0px;
-			}
-			footer {
-				position: fixed;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 40px;
-				background-color: #f5f5f5;
-			}
-			footer div{
-				padding-top: 10px;
-			}
-
-			#page-main{}
-			#page-app{display: none;}
-
-			#remove-ticket{display: none;}
-
-		</style>
+		<link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
 	</head>
 	<body>
 
@@ -83,6 +47,7 @@
 				</div>
 			</footer>
 
+			<!-- FIXME only make user enter email password password-conf, let the enter the rest in the welcome screen-->
 			<!-- SIGNUP MODAL -->
 			<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
 				<div class="modal-dialog modal-sm">
@@ -128,26 +93,8 @@
 				</div>
 			</div>
 
-			<!-- SUCCESS MODAL -->
-			<div id="q-success-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="success-modal">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title">Success!</h4>
-						</div>
-						<div class="modal-body">
-							<div id="signup-success-message" class="text-center">
-								<span class="glyphicon glyphicon-ok animated zoomIn text-success"></span>
-								<p>A confirmation message have been sent to your mail.</p>
-							</div>
-							<form>
-								<button id="success-button" data-dismiss="modal" data-toggle="modal" data-target="#q-login-modal" type="button" class="btn btn-default btn-block">Go to login</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!-- FIXME remove success modal and make signup go directly to app page with auto login -->
+
 
 			<!-- LOGIN MODAL -->
 			<div id="q-login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="login-modal">
@@ -189,6 +136,27 @@
 				</div>
 			</div>
 
+			<!-- PASSWORD RESET MODAL -->
+			<div id="q-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="password-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Success!</h4>
+						</div>
+						<div class="modal-body">
+							<div id="password-success-message" class="text-center">
+								<span class="glyphicon glyphicon-ok animated zoomIn text-success"></span>
+								<p>A new password have been sent to your mail.</p>
+							</div>
+							<form>
+								<button id="success-button" data-dismiss="modal" data-toggle="modal" data-target="#q-login-modal" type="button" class="btn btn-default btn-block">Go to login</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div><!-- end main view -->
 
 
@@ -208,7 +176,7 @@
 					</div>
 					<div id="app-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#settings" data-toggle="modal" data-target="#q-settings-modal"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
+							<li><a href="#settings" data-toggle="modal" data-target="#q-settings-modal"><span class="glyphicon glyphicon-user"></span> Account</a></li>
 							<li><a href="#logout" data-toggle="modal" data-target="#q-logout-modal" class="text-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 						</ul>
 					</div><!--/.nav-collapse -->
@@ -243,7 +211,7 @@
 				</form>
 
 				<!-- TODO Display current ticket -->
-				<div id="current-ticket">
+				<div id="current-ticket" class="text-center">
 
 				</div>
 
@@ -263,7 +231,9 @@
 				</div>
 			</footer>
 
+			<!--TODO Welcome modal/slides, show if no user.first_name||last_name||course is found-->
 
+			<!-- FIXME Ticket modal -->
 			<!-- TICKET MODAL -->
 			<div id="q-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
 				<div class="modal-dialog modal-sm">
@@ -275,16 +245,39 @@
 						<div class="modal-body">
 							<form>
 								<div class="form-group">
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-primary">
+									    <input type="checkbox" autocomplete="off">M
+									  </label>
+									</div>
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-primary">
+									    <input type="checkbox" autocomplete="off">2
+									  </label>
+									</div>
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-primary">
+									    <input type="checkbox" autocomplete="off">3
+									  </label>
+									</div>
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-primary">
+									    <input type="checkbox" autocomplete="off">?
+									  </label>
+									</div>
+								</div>
+								<div class="form-group">
 									<select class="form-control">
-									  <option>Sketchsalen</option>
-									  <option>Svetsrummet</option>
-									  <option>Målarrummet</option>
-									  <option>Handverktygsverkstaden</option>
-									  <option>Maskinsalen</option>
+									  <option>Designstudion</option>
+									  <option>Utställningataljen</option>
+									  <option>Mixstudion</option>
+									  <option>Workshop</option>
+									  <option>Atalje</option>
+										<option>Lackrummet</option>
 									</select>
 								</div>
 								<div class="form-group">
-									<div class="btn-group" data-toggle="buttons">
+									<div class="btn-group btn-group-justified" data-toggle="buttons">
 									  <label class="btn btn-primary active">
 									    <input type="radio" name="options" id="option1" autocomplete="off" checked> 5 min
 									  </label>
@@ -293,18 +286,22 @@
 									  </label>
 									</div>
 								</div>
-								<div class="form-group">
-									<button id="ticket-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
-								</div>
 							</form>
 							<div id="ticket-alert"></div>
+						</div>
+						<div class="modal-footer">
+							<div class="form-group">
+								<button id="ticket-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- TODO Queue modal -->
-			<!-- TICKET MODAL -->
+			<!--TODO CONFIRM remove-ticket MODAL -->
+
+			<!-- FIXME Queue modal -->
+			<!-- QUEUE MODAL -->
 			<div id="q-queue-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
@@ -335,6 +332,8 @@
 				</div>
 			</div>
 
+			<!-- FIXME Logout modal -->
+			<!-- LOGOUT MODAL -->
 			<div id="q-logout-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
@@ -351,401 +350,22 @@
 				</div>
 			</div>
 
-
-			<!-- TODO Settings modal, maybe page instead? -->
-
 		</div><!-- end app view -->
 
 
-
+		<!-- TODO Settings page -->
 		<!-- SETTINGS VIEW -->
 		<div id="page-settings" class="container-fluid">
+
 		</div><!-- end app view -->
+
+
+
 
 		<script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
 		<script src="bower_components/firebase/firebase.js" charset="utf-8"></script>
-		<script src="bower_components/knockout/dist/knockout.js" charset="utf-8"></script>
-
-		<script type="text/javascript">
-
-			var firebase = {
-				root: undefined,
-				users: undefined,
-				user: undefined
-			};
-
-			var user = {
-				name: {
-					first: undefined,
-					last: undefined
-				},
-				mail: undefined,
-				uid: undefined,
-				queue: undefined,
-				password: undefined
-			};
-
-			//TODO knockout view model
-			//TODO deactivate signup/login button while incomplete information
-
-			$(document).ready( function (){
-				app.init();
-			});
-
-			var app = {
-				init: function(){
-					firebase.root = new Firebase("https://mah-space-mono.firebaseio.com");
-					firebase.users = firebase.root.child("users");
-
-					//FIXME seems unneccesary, refactor into something more elegant
-					var authD = firebase.root.getAuth();
-					if(authD){
-					  console.log("User with uid:", authD.uid);
-						user.uid = authD.uid;
-						firebase.user = firebase.users.child(user.uid);
-						queue.setListener();
-						$("#page-main").toggle();
-						$("#page-app").toggle();
-					} else {
-						console.log("No auth");
-						//change view here
-					}
-
-					setButtonListeners();
-
-					/**
-						Set a listener on the clients auth state and change views
-							depending on if authData is null > main page
-							or if authData returns the auth object > app page
-						No viewchange necessary in login/logout
-					**/
-					//TODO move page view change into onAuth callback
-					firebase.root.onAuth(function(authData){
-						if(authData){
-						  console.log("Authenticated user with uid:", authData.uid);
-							user.uid = authData.uid;
-							//change view here
-						} else {
-							console.log("No auth");
-							//change view here
-						}
-					});
-
-				},
-				signup: function(){
-					user.name.first = $("#signup-first-name").val().toLowerCase();
-					user.name.last = $("#signup-last-name").val().toLowerCase();
-					user.course = $("#signup-course").val().toLowerCase();
-					user.mail = $("#signup-mail").val().toLowerCase();
-					user.password = $("#signup-password").val();
-					//TODO validate this with firebase security instead IF an error message that is clear for the user can be presented
-					if(user.name.first === "" || user.mail === "" || user.password === ""){
-						displayAlert("#signup-alert","Please fill out all fields","alert-warning");
-					} else {
-						auth.signup(user.name.first, user.mail, user.password);
-					}
-				},
-				login: function(){
-					user.mail = $("#login-mail").val().toLowerCase();
-					user.password = $("#login-password").val();
-					auth.login(user.mail, user.password);
-				},
-				logout: function(){
-					firebase.root.unauth();
-				},
-				getTicket: function(){
-					firebase.user.update({ticket: Date.now()});
-					toggleTicket();
-				},
-				removeTicket: function(){
-					firebase.user.update({ticket: 0});
-					toggleTicket();
-				}
-			}
-
-			var auth = {
-				signup: function (name, mail, password){
-					console.log("signing up "+name+ "...");
-					firebase.root.createUser({
-						email    : mail,
-						password : password
-					}, function(error, userData) {
-						if (error) {
-							switch (error.code) {
-								//TODO shake the signup button with animate.css and display error message
-								case "INVALID_EMAIL":
-									displayAlert("#signup-alert","The specified user account email is invalid","alert-danger");
-									console.log("The specified user account email is invalid.");
-									break;
-								case "EMAIL_TAKEN":
-									displayAlert("#signup-alert","The specified user account email is already taken","alert-warning");
-									console.log("The specified user account email is already taken");
-									break;
-								default:
-									var err = "Error signing up user:" + error;
-									displayAlert("#signup-alert",err,"alert-danger");
-									console.log("Error signing up user:", error);
-							}
-						} else {
-							console.log("Successfully created user account with uid:", userData.uid);
-							user.uid = userData.uid;
-
-							//TODO set up a new user in firebase
-							firebase.user = firebase.users.child(userData.uid);
-
-							firebase.user.set({
-								name: {
-									first: user.name.first,
-									last: user.name.last
-								},
-								course: user.course,
-								ticket: "0",
-								account: "limited"
-							});
-
-							//TODO log in user automatically after successfully registration
-							$("#q-signup-modal").modal("hide");
-							$("#q-success-modal").modal("show");
-
-						}
-					});
-				},
-				login: function(mail,password){
-					console.log("logging in...");
-					var checkbox = $("#login-checkbox:checked").val();
-					var rememberMe;
-					if(checkbox === true){
-						rememberMe = "default";
-					} else {
-						rememberMe = "sessionOnly";
-					}
-					firebase.root.authWithPassword({
-					  email: mail,
-					  password: password
-					}, function(error, authData) {
-					  if (error) {
-							var err = "Error signing in:" + error;
-							displayAlert("#login-alert",err,"alert-danger");
-					    console.log("Login Failed!", error);
-					  } else {
-							console.log("Authenticated successfully with payload:", authData);
-
-							//TODO remove this after signup login user automatically
-							user.uid = authData.uid;
-							firebase.user = firebase.users.child(user.uid);
-							firebase.user.once("value", function(data){
-								if(data.val()){
-									user.name.first = data.name.first;
-									user.name.last = data.name.last;
-									user.course = data.course;
-									console.log("found data");
-								} else {
-									console.log("creating data");
-									firebase.user.set({
-										name: {
-											first: "exampleName",//user.name.first,
-											last: "exampleNameLast"//user.name.last
-										},
-										course: "exampleCourse",//user.course,
-										ticket: "0",
-										account: "limited"
-									});
-								}
-
-							});
-
-							queue.setListener();
-
-							$("#q-login-modal").modal("hide");
-							$("#page-main").toggle();
-							$("#page-app").toggle();
-					  }
-					},{
-						remember: rememberMe
-					}
-				);
-				}
-			}
-
-			function setButtonListeners(){
-				$("#signup-button").on("click", app.signup);
-				$("#login-button").on("click", app.login);
-				$("#logout-button").on("click", app.logout);
-				$("#get-ticket-button").on("click", app.getTicket);
-				$("#remove-ticket-button").on("click", app.removeTicket);
-			}
-
-			var queue = {
-				arr: [],
-				setListener: function(){
-					firebase.users.on("value", function(snapshot){
-						queue.reset();
-						console.log("New queue read");
-						snapshot.forEach(function(data){
-							if(data.child("ticket").val() != 0 && data.child("ticket").val() !== null){
-								//console.log(data.child("ticket").val());
-								queue.pushTo(data);
-							}
-						});
-						queue.sortQueue();
-						user.queue = queue.findTicket(user.uid);
-						queue.draw();
-					},function(error){
-						console.log("The read failed: " + error.code);
-					});
-				},
-				pushTo: function(obj){
-					queue.arr.push({
-						/*name: {
-							first: obj.child("name/first").val(),
-							last: obj.child("name/last").val()
-						},*/
-						uid: obj.key(),
-						ticket: obj.child("ticket").val()
-					});
-				},
-				sortQueue: function(){
-					queue.arr.sort(dynamicSort("ticket"));
-					//console.log(queue.arr);
-				},
-				findTicket: function(uid){
-					queue.arr.forEach(function(entry, index){
-						if(entry.uid === uid){
-							$("#current-ticket").empty();
-							$("#current-ticket").append("<h3>"+(index+1)+"</h3>");
-							return (index + 1);
-						} else {
-							$("#current-ticket").empty();
-							return 0;
-						}
-					});
-				},
-				//TODO draw queue method
-				draw: function(){
-					$("#queue-div").empty();
-					for(var i = 0; i < queue.arr.length; i++){
-						var template = [
-							'<p>NR ',
-							i+1,
-							'</p>'
-						].join("\n");
-					$("#queue-div").append(template);
-					}
-				},
-				reset: function(){
-					queue.arr.length = 0;
-				}
-			}
-
-			function displayAlert(query, msg, type) {
-				var wordArr =["Ops!", "Darn!", "Uh-oh...", "Err.", "Hm...", "It's probably not you, but...", "Ehh...", "Great Scott!", "Well..."];
-
-				$(query).append('<div id="alert-div" class="alert fade in ' + type + '"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span><strong>' + wordArr[Math.floor(Math.random() * wordArr.length)] + '</strong> ' + msg + '</span>')
-
-				setTimeout(function() {
-					$("#alert-div").remove();
-				}, 6000);
-			}
-
-			function toggleTicket(){
-				$("#get-ticket").toggle();
-				$("#remove-ticket").toggle();
-			}
-
-			//FIXME mayby there is a underscore method for this?
-			//as found at http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
-			//use as: Array.sort(dynamicSort("property"));
-			function dynamicSort(property) {
-				var sortOrder = 1;
-				if(property[0] === "!") {
-					sortOrder = -1;
-					property = property.substr(1);
-				}
-				return function (a,b) {
-					var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-					return result * sortOrder;
-				}
-			}
-
-			//TODO replace Date.now() with Firebase.ServerValue.TIMESTAMP
-			//TODO jquery hasher check so that a user can go directly into their app
-			//TODO remove jquery and bootstrap
-			//TODO low-dash
-			//TODO admin interface
-			//TODO password reset button and method
-			//TODO settings menu, change email, change password,
-			//TODO validate password
-			//TODO use module pattern for app instead of object literals
-			//TODO remove knockout, use backbone instead
-			//TODO write security rule, if logged out > ticket = 0
-			//TODO implement underscore.js in app for its template util functions. also is a dep for backbone
-
-			//TODO set data for new user that includes info
-			/*
-				user.set({
-					ticket: {
-						id: timestamp // firebase.servervalue,
-						est: "SHORT" || "MEDIUM", //5min or 10 min,
-						location: //which room the person is in
-						tags: {
-							drill: true,
-							saw: false,
-							...
-						}
-					}
-					account: "LIMITED" || "EXPANDED" || "FULL" || "ADMIN"
-										students, can help others if they have correct tags
-										tutors, can help anybody regardless of tags, up to themselfs
-										teachers, can push and pull queue, help anybody, pause queue
-										admin, full read/write
-					status: "ACTIVE" || "IDLE" || "BREAK" || "OUT"
-										active is written when user make an action in app
-										user has logged in but is not participating in any action
-										break is written when???
-										out means logged out
-					info
-						first_name
-						last_name
-						studies: "corse or program"
-					skills
-						saw
-						drill
-						...
-
-				});
-			*/
-
-			//TODO push data everytime user take ticket, save ref to that key
-			/*
-				user.push({
-					time: Date.now(),
-					event: "TICKET" || "SUPPORT",
-					status: "RESOLVED" || "REMOVED" || "PENDING",
-					tags: {
-						saw: true || false,
-						drill: true || false,
-						...
-					},
-					removed: {
-						time: Date.now(),
-						uid: removers uid
-					},
-					resolved: {
-						time: Date.now(),
-						uid: resolvers uid
-					},
-					updates: {
-						this.push({
-							time: Date.now(),
-							moved: "UP" || "DOWN" || "BOTTOM",
-							uid: movers uid
-						})
-					}
-				});
-			*/
-
-		</script>
+		<script src="app.js" charset="utf-8"></script>
 
 	</body>
 </html>
