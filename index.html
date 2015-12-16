@@ -18,17 +18,12 @@
 			.brand-text {
 				font-family: monospace;
 			}
-			.center {
-				text-align: center;
-			}
 			#signup-success-message {
-				text-align: center;
 				margin-bottom: 24px;
 			}
 			#signup-success-message span {
 				font-size: 36px;
 				margin: 20px 0px 24px 0px;
-				color: #5CB85C;
 			}
 			footer {
 				position: fixed;
@@ -41,11 +36,11 @@
 			footer div{
 				padding-top: 10px;
 			}
+
 			#page-main{}
 			#page-app{display: none;}
-			#page-settings{display: none;}
 
-
+			#remove-ticket{display: none;}
 
 		</style>
 	</head>
@@ -58,13 +53,13 @@
 			<nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container">
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="glyphicon glyphicon-menu-hamburger"></span>
 						</button>
 						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
 					</div>
-					<div id="navbar" class="navbar-collapse collapse">
+					<div id="main-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
 							<li><a href="#signup" data-toggle="modal" data-target="#q-signup-modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 							<li><a href="#login" data-toggle="modal" data-target="#q-login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -74,7 +69,7 @@
 			</nav>
 
 			<!-- PRESENTATION -->
-			<div class="jumbotron center">
+			<div class="jumbotron text-center">
 				<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
 				<br>
 				<p>Created by students from Malmö University IxD program.</p>
@@ -142,8 +137,8 @@
 							<h4 class="modal-title">Success!</h4>
 						</div>
 						<div class="modal-body">
-							<div id="signup-success-message">
-								<span class="glyphicon glyphicon-ok animated zoomIn"></span>
+							<div id="signup-success-message" class="text-center">
+								<span class="glyphicon glyphicon-ok animated zoomIn text-success"></span>
 								<p>A confirmation message have been sent to your mail.</p>
 							</div>
 							<form>
@@ -196,45 +191,68 @@
 
 		</div><!-- end main view -->
 
+
+
 		<!-- APP VIEW -->
 		<div id="page-app" class="container-fluid">
 
-			<!-- FIXED NAVBAR-->
+			<!-- FIXED NAVBAR -->
 			<nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container">
 					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+						</button>
 						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
 					</div>
+					<div id="app-navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#settings" data-toggle="modal" data-target="#q-settings-modal"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
+							<li><a href="#logout" data-toggle="modal" data-target="#q-logout-modal" class="text-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
 				</div>
 			</nav>
 
 			<!-- CONTENT -->
-			<div class="jumbotron">
+			<div class="well">
 
-				<form id="get-help">
+				<form id="get-ticket">
 					<div class="form-group">
 						<div class="row">
 							<div class="col-xs-2"></div>
 							<div class="col-xs-8">
-								<button id="get-help-button" type="button" class="btn btn-success btn-block btn-lg">Need help?</button>
+								<button id="get-ticket-button" type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#q-ticket-modal">Need help?</button>
 							</div>
 							<div class="col-xs-2"></div>
 						</div>
 					</div>
 				</form>
 
-				<form id="end-help">
+				<form id="remove-ticket">
 					<div class="form-group">
 						<div class="row">
 							<div class="col-xs-2"></div>
 							<div class="col-xs-8">
-								<button id="end-help-button" type="button" class="btn btn-warning btn-block btn-lg">Step out</button>
+								<button id="remove-ticket-button" type="button" class="btn btn-warning btn-block btn-lg">Step out</button>
 							</div>
 							<div class="col-xs-2"></div>
 						</div>
 					</div>
 				</form>
 
+				<!-- TODO Display current ticket -->
+				<div id="current-ticket">
+
+				</div>
+
+				<form id="help-others">
+					<div class="form-group">
+						<button id="help-others-button" type="button" class="btn center-block btn-success btn-sm" data-toggle="modal" data-target="#q-queue-modal">Help others</button>
+
+					</div>
+				</form>
 
 			</div>
 
@@ -245,8 +263,65 @@
 				</div>
 			</footer>
 
-			<!-- TODO Take-place modal -->
+
+			<!-- TICKET MODAL -->
+			<div id="q-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Take ticket</h4>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<select class="form-control">
+									  <option>Sketchsalen</option>
+									  <option>Svetsrummet</option>
+									  <option>Målarrummet</option>
+									  <option>Handverktygsverkstaden</option>
+									  <option>Maskinsalen</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<div class="btn-group" data-toggle="buttons">
+									  <label class="btn btn-primary active">
+									    <input type="radio" name="options" id="option1" autocomplete="off" checked> 5 min
+									  </label>
+									  <label class="btn btn-primary">
+									    <input type="radio" name="options" id="option2" autocomplete="off"> 10 min
+									  </label>
+									</div>
+								</div>
+								<div class="form-group">
+									<button id="ticket-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+								</div>
+							</form>
+							<div id="ticket-alert"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<!-- TODO Queue modal -->
+			<!-- TICKET MODAL -->
+			<div id="q-queue-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Current queue</h4>
+						</div>
+						<div class="modal-body">
+							<div id="queue-div"></div>
+							<div id="queue-alert"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- TODO Settings modal, maybe page instead? -->
 
 		</div><!-- end app view -->
 
@@ -291,8 +366,7 @@
 				init: function(){
 					firebase.root = new Firebase("https://mah-space-mono.firebaseio.com");
 					firebase.users = firebase.root.child("users");
-					console.log(firebase.root.toString());
-					console.log(firebase.users.toString());
+
 					setButtonListeners();
 
 					/**
@@ -337,9 +411,11 @@
 				},
 				getTicket: function(){
 					firebase.user.update({ticket: Date.now()});
+					toggleTicket();
 				},
 				removeTicket: function(){
 					firebase.user.update({ticket: 0});
+					toggleTicket();
 				}
 			}
 
@@ -410,6 +486,7 @@
 					  } else {
 							console.log("Authenticated successfully with payload:", authData);
 
+							//TODO remove this after signup login user automatically
 							user.uid = authData.uid;
 							firebase.user = firebase.users.child(user.uid);
 							firebase.user.once("value", function(data){
@@ -456,27 +533,8 @@
 			function setButtonListeners(){
 				$("#signup-button").on("click", app.signup);
 				$("#login-button").on("click", app.login);
-				$("#get-help-button").on("click", app.getTicket);
-				$("#end-help-button").on("click", app.removeTicket);
-
-				//modal enter key
-				/*
-				$(document).on( "keydown", function(event) {
-					if(event.which == 13){
-						if ($("#q-signup-modal").is(":visible")) {
-						  app.signup;
-						} else if ($("#q-login-modal").is(":visible")){
-							app.login;
-						} else if($("#q-success-modal").is(":visible")){
-							$("#q-success-modal").modal("hide");
-							$("#q-login-modal").modal("show");
-						}
-
-						if($(element).css('display') == 'none' ){
-	    				// element is hidden
-						}
-					}
-				});*/
+				$("#get-ticket-button").on("click", app.getTicket);
+				$("#remove-ticket-button").on("click", app.removeTicket);
 			}
 
 			var queue = {
@@ -515,23 +573,26 @@
 				findTicket: function(uid){
 					queue.arr.forEach(function(entry, index){
 						if(entry.uid === uid){
+							$("#current-ticket").empty();
+							$("#current-ticket").append("<h3>"+(index+1)+"</h3>");
 							return (index + 1);
 						} else {
+							$("#current-ticket").empty();
 							return 0;
 						}
 					});
 				},
 				//TODO draw queue method
 				draw: function(){
-
-					/*
 					$("#queue-div").empty();
 					for(var i = 0; i < queue.arr.length; i++){
 						var template = [
-
+							'<p>NR ',
+							i+1,
+							'</p>'
 						].join("\n");
-						$("#queue-div").append(template);
-					}*/
+					$("#queue-div").append(template);
+					}
 				},
 				reset: function(){
 					queue.arr.length = 0;
@@ -548,6 +609,11 @@
 				}, 6000);
 			}
 
+			function toggleTicket(){
+				$("#get-ticket").toggle();
+				$("#remove-ticket").toggle();
+			}
+
 			//as found at http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
 			//use as: Array.sort(dynamicSort("property"));
 			function dynamicSort(property) {
@@ -562,10 +628,65 @@
 				}
 			}
 
-
+			//TODO replace Date.now() with Firebase.ServerValue.TIMESTAMP
 			//TODO jquery hasher check so that a user can go directly into their app
 			//TODO admin interface
 			//TODO password reset button and method
+			//TODO use module pattern for app instead of object literals
+			//TODO remove knockout, use backbone instead
+			//TODO write security rule, if logged out > ticket = 0
+			//TODO implement underscore.js in app for its template util functions. also is a dep for backbone
+
+			//TODO set data for new user that includes info
+			/*
+				user.set({
+					ticket: 0,
+					account: "LIMITED" || "EXPANDED" || "FULL" || "ADMIN"
+										students, can help others if they have correct tags
+										tutors, can help anybody regardless of tags, up to themselfs
+										teachers, can push and pull queue, help anybody, pause queue
+										admin, full read/write
+					status: "ONLINE" || "OFFLINE"
+					info
+						first_name
+						last_name
+						studies: "corse or program"
+					skills
+						saw
+						drill
+						...
+
+				});
+			*/
+
+			//TODO push data everytime user take ticket, save ref to that key
+			/*
+				user.push({
+					time: Date.now(),
+					event: "TICKET" || "SUPPORT",
+					status: "RESOLVED" || "REMOVED" || "PENDING",
+					tags: {
+						saw: true || false,
+						drill: true || false,
+						...
+					},
+					removed: {
+						time: Date.now(),
+						uid: removers uid
+					},
+					resolved: {
+						time: Date.now(),
+						uid: resolvers uid
+					},
+					updates: {
+						this.push({
+							time: Date.now(),
+							moved: "UP" || "DOWN" || "BOTTOM",
+							uid: movers uid
+						})
+					}
+				});
+			*/
 
 		</script>
 
