@@ -10,6 +10,93 @@
 	</head>
 	<body>
 
+		<!-- FIXME only make user enter email password password-conf, let the enter the rest in the welcome screen-->
+		<!-- SIGNUP MODAL -->
+		<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Sign up</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label class="sr-only" for="signup-firstname">First name</label>
+								<input type="text" class="form-control" id="signup-first-name" placeholder="First name">
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="signup-lastname">Last name</label>
+								<input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="signup-course">Course</label>
+								<input type="text" class="form-control" id="signup-course" placeholder="Course">
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="signup-email">Email address</label>
+								<input type="email" class="form-control" id="signup-mail" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="signup-password">Password</label>
+								<input type="password" class="form-control" id="signup-password" placeholder="Password">
+							</div>
+							<div class="form-group form-inline">
+								<div class="row">
+									<div class="col-xs-8"></div>
+									<div class="col-xs-4">
+										<button id="signup-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div id="signup-alert"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- FIXME remove success modal and make signup go directly to app page with auto login -->
+		<!-- LOGIN MODAL -->
+		<div id="q-login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="login-modal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Login</h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label class="sr-only" for="login-email">Email address</label>
+								<input type="email" class="form-control" id="login-mail" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="login-password">Password</label>
+								<input type="password" class="form-control" id="login-password" placeholder="Password">
+							</div>
+							<div class="form-group form-inline">
+								<div class="row">
+									<div class="col-xs-8">
+										<div class="checkbox">
+											<label>
+												<input id="login-checkbox" type="checkbox"> Remember me
+											</label>
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+									</div>
+								</div>
+							</div>
+							<button data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal" type="button" class="btn btn-link btn-block">don't have an account?</button>
+						</form>
+						<div id="login-alert"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- MAIN VIEW -->
 		<div id="page-main" class="container-fluid">
 
@@ -47,94 +134,10 @@
 				</div>
 			</footer>
 
-			<!-- FIXME only make user enter email password password-conf, let the enter the rest in the welcome screen-->
-			<!-- SIGNUP MODAL -->
-			<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title">Sign up</h4>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-									<label class="sr-only" for="signup-firstname">First name</label>
-									<input type="text" class="form-control" id="signup-first-name" placeholder="First name">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="signup-lastname">Last name</label>
-									<input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="signup-course">Course</label>
-									<input type="text" class="form-control" id="signup-course" placeholder="Course">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="signup-email">Email address</label>
-									<input type="email" class="form-control" id="signup-mail" placeholder="Email">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="signup-password">Password</label>
-									<input type="password" class="form-control" id="signup-password" placeholder="Password">
-								</div>
-								<div class="form-group form-inline">
-									<div class="row">
-										<div class="col-xs-8"></div>
-										<div class="col-xs-4">
-											<button id="signup-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
-										</div>
-									</div>
-								</div>
-							</form>
-							<div id="signup-alert"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- FIXME remove success modal and make signup go directly to app page with auto login -->
 
 
-			<!-- LOGIN MODAL -->
-			<div id="q-login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="login-modal">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title">Login</h4>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-									<label class="sr-only" for="login-email">Email address</label>
-									<input type="email" class="form-control" id="login-mail" placeholder="Email">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="login-password">Password</label>
-									<input type="password" class="form-control" id="login-password" placeholder="Password">
-								</div>
-								<div class="form-group form-inline">
-									<div class="row">
-										<div class="col-xs-8">
-											<div class="checkbox">
-												<label>
-													<input id="login-checkbox" type="checkbox"> Remember me
-												</label>
-											</div>
-										</div>
-										<div class="col-xs-4">
-											<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
-										</div>
-									</div>
-								</div>
-								<button data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal" type="button" class="btn btn-link btn-block">don't have an account?</button>
-							</form>
-							<div id="login-alert"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+
+
 
 			<!-- PASSWORD RESET MODAL -->
 			<div id="q-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="password-modal">
@@ -366,6 +369,8 @@
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
 		<script src="bower_components/firebase/firebase.js" charset="utf-8"></script>
 		<script src="app.js" charset="utf-8"></script>
+		<script src="qApp.js" charset="utf-8"></script>
+		<script src="qView.js" charset="utf-8"></script>
 
 	</body>
 </html>

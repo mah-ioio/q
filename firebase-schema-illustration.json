@@ -1,0 +1,95 @@
+//ONLY USED AS DATABASE ILLUSTRATION
+//THIS FILE HAVE NO FUNCTION IN Q APP
+//and its not proper json, sorry...
+
+users:{
+	$uid:{
+		account: "LIMITED" || "EXPANDED" || "FULL" || "ADMIN",
+		status: "ACTIVE" || "IDLE" || "BREAK" || "LOGGED_OUT",
+		info:{
+			first_name: "String first name",
+			last_name: "String last name",
+			studies: "String course || program"
+			avatar: "Path to img or encoded img"
+			color: "#ABC123 hex color for user avatar frame and other details"
+		},
+		licenses:{
+			saw: true,
+			drill: false,
+			...
+		}
+	}
+},
+tickets:{
+	$uid:{
+		ticket_id: Firebase.ServerValue.TIMESTAMP,
+		est: "SHORT" || "MEDIUM",
+		location: "String location",
+		tags: {
+			questions: true || false,
+			heavy_machines: true || false,
+			3d_printer: true || false,
+			laser_cutter: true || false
+		}
+	}
+},
+logs:{
+	$uid:{
+		$push:{
+			time: Firebase.ServerValue.TIMESTAMP,
+			target: users.$uid,
+			event: "TICKET_CREATED" || "TICKET_REMOVED" || "TICKET_PUSHED" || "SUPPORT_PENDING" || "SUPPORT_ACCEPTED" || "LICENSE_ADDED" etc,
+			msg: "Description of event as a String, ex1 'Granted licenses DRILL to uid: 2443.3444' ex2 'Ticket pushed down'"
+		},
+		others_events:{
+			$copy:{
+				time: logs.$uid.$push.time,
+				event: logs.$uid.$push.event,
+				msg: logs.$uid.$push.msg,
+			}
+		}
+	}
+},
+game:{
+	users:{
+		$uid:{
+			xp: XYZ,
+			achivements:{
+				$id: true || false
+			}
+			stats:{
+				taken_ticket: XYZ,
+				removed_ticket: XYZ,
+				got_help: XYZ,
+				given_help: XYZ,
+				bugs_reported: XYZ,
+				...
+			}
+		}
+	},
+	rules:{
+		achivements:{
+			$id:{
+				name: "Bug squasher!",
+				icon: "img path or encoded img",
+				description: "Report 5 bugs.",
+				demands: {
+					bugs_reported: XYZ,
+					xp: XYZ
+				}
+			}
+		}
+		levels:{},
+		ranks:{}
+	}
+},
+bugs:{
+	$uid:{
+		$push:{
+			time: Firebase.ServerValue.TIMESTAMP,
+			uid: client.uid,
+			ver: "X.XX",
+			msg: "String message"
+		}
+	}
+}
