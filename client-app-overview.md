@@ -2,6 +2,7 @@
 
 Should write this app in a pubsub pattern and let all functions handling views subscribe to these topics and have a callback fired when publishing to these topics within the app
 
+Modules should be written so that they can functional degrade if javascript do not run
 
 
 init - public
@@ -107,3 +108,22 @@ loading
 nav-bar
 footer
 modals
+
+
+//THOUGHTS
+
+LOADING
+while loading
+	if reset
+		Q logo glitching
+	text say 'loading...' and dots after loading appear one after another
+when loaded
+	Q logo zoom in and fade out
+	qView render either pg.main or pg.app
+---
+glitch()
+	reset = false
+	use animatable to create vhs-like distortions on logo
+	animatable attributes are set with semi-random values
+	setTimeout with random value
+		reset = true

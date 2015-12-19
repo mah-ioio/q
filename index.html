@@ -10,134 +10,95 @@
 	</head>
 	<body>
 
-		<!-- FIXME only make user enter email password password-conf, let the enter the rest in the welcome screen-->
-		<!-- SIGNUP MODAL -->
-		<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Sign up</h4>
-					</div>
-					<div class="modal-body">
-						<form>
-							<div class="form-group">
-								<label class="sr-only" for="signup-firstname">First name</label>
-								<input type="text" class="form-control" id="signup-first-name" placeholder="First name">
-							</div>
-							<div class="form-group">
-								<label class="sr-only" for="signup-lastname">Last name</label>
-								<input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
-							</div>
-							<div class="form-group">
-								<label class="sr-only" for="signup-course">Course</label>
-								<input type="text" class="form-control" id="signup-course" placeholder="Course">
-							</div>
-							<div class="form-group">
-								<label class="sr-only" for="signup-email">Email address</label>
-								<input type="email" class="form-control" id="signup-mail" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<label class="sr-only" for="signup-password">Password</label>
-								<input type="password" class="form-control" id="signup-password" placeholder="Password">
-							</div>
-							<div class="form-group form-inline">
-								<div class="row">
-									<div class="col-xs-8"></div>
-									<div class="col-xs-4">
-										<button id="signup-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
-									</div>
-								</div>
-							</div>
-						</form>
-						<div id="signup-alert"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<!-- MODALS CONTAINER -->
+		<div id="container-modals" class="container-fluid">
 
-		<!-- FIXME remove success modal and make signup go directly to app page with auto login -->
-		<!-- LOGIN MODAL -->
-		<div id="q-login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="login-modal">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Login</h4>
-					</div>
-					<div class="modal-body">
-						<form>
-							<div class="form-group">
-								<label class="sr-only" for="login-email">Email address</label>
-								<input type="email" class="form-control" id="login-mail" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<label class="sr-only" for="login-password">Password</label>
-								<input type="password" class="form-control" id="login-password" placeholder="Password">
-							</div>
-							<div class="form-group form-inline">
-								<div class="row">
-									<div class="col-xs-8">
-										<div class="checkbox">
-											<label>
-												<input id="login-checkbox" type="checkbox"> Remember me
-											</label>
+			<!-- FIXME only make user enter email password password-conf, let the enter the rest in the welcome screen-->
+			<!-- SIGNUP MODAL -->
+			<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Sign up</h4>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<label class="sr-only" for="signup-firstname">First name</label>
+									<input type="text" class="form-control" id="signup-first-name" placeholder="First name">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-lastname">Last name</label>
+									<input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-course">Course</label>
+									<input type="text" class="form-control" id="signup-course" placeholder="Course">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-email">Email address</label>
+									<input type="email" class="form-control" id="signup-mail" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-password">Password</label>
+									<input type="password" class="form-control" id="signup-password" placeholder="Password">
+								</div>
+								<div class="form-group form-inline">
+									<div class="row">
+										<div class="col-xs-8"></div>
+										<div class="col-xs-4">
+											<button id="signup-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
 										</div>
 									</div>
-									<div class="col-xs-4">
-										<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+								</div>
+							</form>
+							<div id="signup-alert"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- FIXME remove success modal and make signup go directly to app page with auto login -->
+			<!-- LOGIN MODAL -->
+			<div id="q-login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="login-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Login</h4>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<label class="sr-only" for="login-email">Email address</label>
+									<input type="email" class="form-control" id="login-mail" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="login-password">Password</label>
+									<input type="password" class="form-control" id="login-password" placeholder="Password">
+								</div>
+								<div class="form-group form-inline">
+									<div class="row">
+										<div class="col-xs-8">
+											<div class="checkbox">
+												<label>
+													<input id="login-checkbox" type="checkbox"> Remember me
+												</label>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+										</div>
 									</div>
 								</div>
-							</div>
-							<button data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal" type="button" class="btn btn-link btn-block">don't have an account?</button>
-						</form>
-						<div id="login-alert"></div>
+								<button data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal" type="button" class="btn btn-link btn-block">don't have an account?</button>
+							</form>
+							<div id="login-alert"></div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<!-- MAIN VIEW -->
-		<div id="page-main" class="container-fluid">
-
-			<!-- FIXED NAVBAR -->
-			<nav class="navbar navbar-default navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="glyphicon glyphicon-menu-hamburger"></span>
-						</button>
-						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
-					</div>
-					<div id="main-navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#signup" data-toggle="modal" data-target="#q-signup-modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-							<li><a href="#login" data-toggle="modal" data-target="#q-login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-						</ul>
-					</div><!--/.nav-collapse -->
-				</div>
-			</nav>
-
-			<!-- PRESENTATION -->
-			<div class="jumbotron text-center">
-				<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
-				<br>
-				<p>Created by students from Malmö University IxD program.</p>
-				<br>
-			</div>
-
-			<!-- STICKY FOOTER -->
-			<footer>
-				<div class="container">
-					<p class="text-muted">© 2015 – IOIO/Malmö University</p>
-				</div>
-			</footer>
-
-
-
-
-
 
 			<!-- PASSWORD RESET MODAL -->
 			<div id="q-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="password-modal">
@@ -159,80 +120,6 @@
 					</div>
 				</div>
 			</div>
-
-		</div><!-- end main view -->
-
-
-
-		<!-- APP VIEW -->
-		<div id="page-app" class="container-fluid ">
-
-			<!-- FIXED NAVBAR -->
-			<nav class="navbar navbar-default navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar" aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="glyphicon glyphicon-menu-hamburger"></span>
-						</button>
-						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
-					</div>
-					<div id="app-navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#settings" data-toggle="modal" data-target="#q-settings-modal"><span class="glyphicon glyphicon-user"></span> Account</a></li>
-							<li><a href="#logout" data-toggle="modal" data-target="#q-logout-modal" class="text-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-						</ul>
-					</div><!--/.nav-collapse -->
-				</div>
-			</nav>
-
-			<!-- CONTENT -->
-			<div class="well">
-
-				<form id="get-ticket">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-xs-2"></div>
-							<div class="col-xs-8">
-								<button id="get-ticket-button" type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#q-ticket-modal">Need help?</button>
-							</div>
-							<div class="col-xs-2"></div>
-						</div>
-					</div>
-				</form>
-
-				<form id="remove-ticket">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-xs-2"></div>
-							<div class="col-xs-8">
-								<button id="remove-ticket-button" type="button" class="btn btn-warning btn-block btn-lg">Step out</button>
-							</div>
-							<div class="col-xs-2"></div>
-						</div>
-					</div>
-				</form>
-
-				<!-- TODO Display current ticket -->
-				<div id="current-ticket" class="text-center">
-
-				</div>
-
-				<form id="help-others">
-					<div class="form-group">
-						<button id="help-others-button" type="button" class="btn center-block btn-success btn-sm" data-toggle="modal" data-target="#q-queue-modal">Help others</button>
-
-					</div>
-				</form>
-
-			</div>
-
-			<!-- STICKY FOOTER -->
-			<footer>
-				<div class="container">
-					<p class="text-muted">© 2015 – IOIO/Malmö University</p>
-				</div>
-			</footer>
 
 			<!--TODO Welcome modal/slides, show if no user.first_name||last_name||course is found-->
 
@@ -353,14 +240,123 @@
 				</div>
 			</div>
 
-		</div><!-- end app view -->
+		</div><!-- end modal container -->
 
 
-		<!-- TODO Settings page -->
-		<!-- SETTINGS VIEW -->
-		<div id="page-settings" class="container-fluid">
+		<!-- #d00d1e || #d00d1e || #d00d1e || #d00d1e ||-->
+		<!-- #BADA55 || #BADA55 || #BADA55 || #BADA55 ||-->
 
-		</div><!-- end app view -->
+
+		<!-- PAGES CONTAINER -->
+		<div id="container-pages" class="container-fluid">
+
+			<!-- FIXED NAVBAR -->
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+						</button>
+						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
+					</div>
+
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<!--TODO insert this content dynamically depending on auth or !auth
+								<li><a href="#signup" data-toggle="modal" data-target="#q-signup-modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+								<li><a href="#login" data-toggle="modal" data-target="#q-login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+							-->
+						</ul>
+					</div><!--/.nav-collapse -->
+
+				</div>
+			</nav>
+
+
+			<!-- LOAD VIEW -->
+			<div id="page-load" class="page active">
+				<span class="loading">Q</span>
+			</div>
+
+			<!-- MAIN VIEW -->
+			<div id="page-main" class="page">
+
+				<!-- PRESENTATION -->
+				<div class="jumbotron text-center">
+					<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
+					<br>
+					<p>Created by students from Malmö University IxD program.</p>
+					<br>
+				</div>
+
+			</div><!-- end main view -->
+
+
+
+			<!-- APP VIEW -->
+			<div id="page-app" class="page">
+
+				<!-- CONTENT -->
+				<div class="well">
+
+					<form id="get-ticket">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-xs-2"></div>
+								<div class="col-xs-8">
+									<button id="get-ticket-button" type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#q-ticket-modal">Need help?</button>
+								</div>
+								<div class="col-xs-2"></div>
+							</div>
+						</div>
+					</form>
+
+					<form id="remove-ticket">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-xs-2"></div>
+								<div class="col-xs-8">
+									<button id="remove-ticket-button" type="button" class="btn btn-warning btn-block btn-lg">Step out</button>
+								</div>
+								<div class="col-xs-2"></div>
+							</div>
+						</div>
+					</form>
+
+					<!-- TODO Display current ticket -->
+					<div id="current-ticket" class="text-center">
+					</div>
+
+					<form id="help-others">
+						<div class="form-group">
+							<button id="help-others-button" type="button" class="btn center-block btn-success btn-sm" data-toggle="modal" data-target="#q-queue-modal">Help others</button>
+						</div>
+					</form>
+
+				</div>
+
+			</div><!-- end app view -->
+
+
+
+			<!-- TODO Settings page -->
+			<!-- SETTINGS VIEW -->
+			<div id="page-settings" class="page">
+			</div><!-- end settings view -->
+
+
+
+			<!-- STICKY FOOTER -->
+			<footer>
+				<div class="container">
+					<p class="text-muted">© 2015 – IOIO/Malmö University</p>
+				</div>
+			</footer>
+
+		</div>
+
+
 
 
 
@@ -368,9 +364,20 @@
 		<script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
 		<script src="bower_components/firebase/firebase.js" charset="utf-8"></script>
-		<script src="app.js" charset="utf-8"></script>
+		<script src="bower_components/radio/radio.js" charset="utf-8"></script>
+		<!--<script src="app.js" charset="utf-8"></script>-->
+
 		<script src="qApp.js" charset="utf-8"></script>
 		<script src="qView.js" charset="utf-8"></script>
+
+		<script type="text/javascript">
+			document.addEventListener('DOMContentLoaded', function(){
+				setTimeout(function(){
+					view.init();
+					console.log('document is ready. I can sleep now');
+				}, 1000);
+			});
+		</script>
 
 	</body>
 </html>
