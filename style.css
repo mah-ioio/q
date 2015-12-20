@@ -1,22 +1,27 @@
+/* Loosely structured in different sections */
+
+/*////////////////*/
+/* LAYOUT & FIXES */
+/*////////////////*/
 html {
 	position: relative;
 	min-height: 100%;
 }
 body {
 	padding-top: 70px;
-	margin-bottom: 40px;
-}
-.brand-text {
-	font-family: monospace;
+	margin-bottom: 30px;
 }
 
-#signup-success-message {
-	margin-bottom: 24px;
+nav ul {
+	display: block;
+	-webkit-margin-before: 0.5em;
+	-webkit-margin-after: 0.5em;
 }
-#signup-success-message span {
-	font-size: 36px;
-	margin: 20px 0px 24px 0px;
+
+.navbar-header ul li {
+	display: inline-block;
 }
+
 footer {
 	position: fixed;
 	bottom: 0;
@@ -25,8 +30,56 @@ footer {
 	height: 40px;
 	background-color: #f5f5f5;
 }
+
 footer div{
 	padding-top: 10px;
+}
+
+.dropdown-menu-nav {
+	text-align: center;
+	min-width: 0px !important;
+}
+
+.dropdown-menu-nav > li{
+	width: 100%;
+}
+
+.divider{
+	width: 1000%;
+	margin: 4px 0 !important;
+}
+
+.dropdown-user {
+	padding: 0 6px;
+	font-style: italic;
+	color: #6A6A6A;
+	font-size: 10pt;
+}
+
+/*/////////*/
+/* STYLING */
+/*/////////*/
+.brand-text {
+	font-family: monospace;
+}
+
+.brand-text.stamp {
+	color: #273C3C;
+	background-color: #E6E3D3;
+	border-radius: 3px;
+	padding: 0 3px;
+}
+
+.modal p {
+	margin-bottom: 4px;
+}
+
+#signup-success-message {
+	margin-bottom: 24px;
+}
+#signup-success-message span {
+	font-size: 36px;
+	margin: 20px 0px 24px 0px;
 }
 
 #page-load{
@@ -43,24 +96,28 @@ footer div{
 	color: #f5f5f5;
 }
 
-/* FUNCTION STYLING */
-.page {
+/*///////////////////*/
+/* FUNCTION STYLINGS */
+/*///////////////////*/
+.page, .nav {
 	display: none;
 	opacity: 0;
 }
 
-.page.active {
+.page.active, .nav.active {
 	display: block;
 	opacity: 1;
-	animation: fadeIn 1s;
+	animation: fadeIn 0.5s;
 }
 
-.page.active.fade {
+.page.active.fade, .nav.active.fade {
 	opacity: 0;
-	animation: fadeOut 1s;
+	animation: fadeOut 0.5s;
 }
 
+/*////////////*/
 /* ANIMATIONS */
+/*////////////*/
 @-webkit-keyframes fadeIn {
     from { opacity: 0; }
       to { opacity: 1; }
@@ -78,3 +135,7 @@ footer div{
     from { opacity: 1; }
       to { opacity: 0; }
 }
+
+/*///////////////*/
+/* MEDIA QUERIES */
+/*///////////////*/

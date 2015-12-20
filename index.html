@@ -5,6 +5,7 @@
 		<title>Q app</title>
 		<meta name="viewport" content="initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no"/>
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<!--TODO remove animate.css and do proper custom animations -->
 		<link rel="stylesheet" href="bower_components/animate.css/animate.css">
 		<link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
 	</head>
@@ -17,44 +18,44 @@
 			<!-- SIGNUP MODAL -->
 			<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
 				<div class="modal-dialog modal-sm">
+
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title">Sign up</h4>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Sign up</h4>
 						</div>
 						<div class="modal-body">
 							<form>
 								<div class="form-group">
-									<label class="sr-only" for="signup-firstname">First name</label>
-									<input type="text" class="form-control" id="signup-first-name" placeholder="First name">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="signup-lastname">Last name</label>
-									<input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
-								</div>
-								<div class="form-group">
-									<label class="sr-only" for="signup-course">Course</label>
-									<input type="text" class="form-control" id="signup-course" placeholder="Course">
-								</div>
-								<div class="form-group">
 									<label class="sr-only" for="signup-email">Email address</label>
-									<input type="email" class="form-control" id="signup-mail" placeholder="Email">
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+										<input type="email" class="form-control" id="signup-mail" placeholder="Email">
+									</div>
 								</div>
 								<div class="form-group">
 									<label class="sr-only" for="signup-password">Password</label>
-									<input type="password" class="form-control" id="signup-password" placeholder="Password">
-								</div>
-								<div class="form-group form-inline">
-									<div class="row">
-										<div class="col-xs-8"></div>
-										<div class="col-xs-4">
-											<button id="signup-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
-										</div>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+										<input type="password" class="form-control" id="signup-password" placeholder="Password">
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="sr-only" for="signup-repeat-password">Repeat password</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+										<input type="password" class="form-control" id="signup-password-repeat" placeholder="Repeat password">
+									</div>
+								</div>
+								<div class="form-group">
+									<button id="signup-button" type="button" class="btn btn-success btn-block">Sign me up!</button>
+								</div>
 							</form>
-							<div id="signup-alert"></div>
 						</div>
+						<div class="modal-footer">
+		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+		          <p>Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-login-modal">Login!</a></p>
+		        </div>
 					</div>
 				</div>
 			</div>
@@ -66,36 +67,45 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title">Login</h4>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-log-in"></span> Login</h4>
 						</div>
 						<div class="modal-body">
 							<form>
 								<div class="form-group">
-									<label class="sr-only" for="login-email">Email address</label>
-									<input type="email" class="form-control" id="login-mail" placeholder="Email">
+									<label class="sr-only" for="signup-email">Email address</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+										<input type="email" class="form-control" id="login-mail" placeholder="Email">
+									</div>
 								</div>
 								<div class="form-group">
-									<label class="sr-only" for="login-password">Password</label>
-									<input type="password" class="form-control" id="login-password" placeholder="Password">
+									<label class="sr-only" for="signup-password">Password</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+										<input type="password" class="form-control" id="login-password" placeholder="Password">
+									</div>
 								</div>
 								<div class="form-group form-inline">
 									<div class="row">
-										<div class="col-xs-8">
+										<div class="col-xs-6">
 											<div class="checkbox">
 												<label>
 													<input id="login-checkbox" type="checkbox"> Remember me
 												</label>
 											</div>
 										</div>
-										<div class="col-xs-4">
+										<div class="col-xs-6">
 											<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
 										</div>
 									</div>
 								</div>
-								<button data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal" type="button" class="btn btn-link btn-block">don't have an account?</button>
 							</form>
-							<div id="login-alert"></div>
 						</div>
+						<div class="modal-footer">
+		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+		          <p>Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal">Sign Up!</a></p>
+		          <p>Forgot <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal">Password?</a></p>
+		        </div>
 					</div>
 				</div>
 			</div>
@@ -110,13 +120,18 @@
 						</div>
 						<div class="modal-body">
 							<div id="password-success-message" class="text-center">
-								<span class="glyphicon glyphicon-ok animated zoomIn text-success"></span>
-								<p>A new password have been sent to your mail.</p>
+								<h1><span class="glyphicon glyphicon-ok animated zoomIn text-success"></span></h1>
+								<h5>A new password have been sent to your mail.</h5>
+								<br>
 							</div>
-							<form>
-								<button id="success-button" data-dismiss="modal" data-toggle="modal" data-target="#q-login-modal" type="button" class="btn btn-default btn-block">Go to login</button>
+							<form class="form-group">
+								<button id="success-button" data-dismiss="modal" data-toggle="modal" data-target="#q-login-modal" type="button" class="btn btn-default btn-block">Go back to login</button>
 							</form>
 						</div>
+						<div class="modal-footer text-center" style="text-align: center;">
+		          <p>If you do not recive a mail or if you are still unable to login to your account, please contact your teacher or send a mail to <span class="brand-text stamp">Q by ioio</span> support.</p>
+							<button class="btn btn-link">support@byioio.com</button>
+		        </div>
 					</div>
 				</div>
 			</div>
@@ -177,7 +192,6 @@
 									</div>
 								</div>
 							</form>
-							<div id="ticket-alert"></div>
 						</div>
 						<div class="modal-footer">
 							<div class="form-group">
@@ -216,7 +230,6 @@
 									<li><a href="#"><span class="glyphicon glyphicon-remove text-danger"></span> Remove from queue</a></li>
 								</ul>
 							</div>
-							<div id="queue-alert"></div>
 						</div>
 					</div>
 				</div>
@@ -243,8 +256,8 @@
 		</div><!-- end modal container -->
 
 
-		<!-- #d00d1e || #d00d1e || #d00d1e || #d00d1e ||-->
-		<!-- #BADA55 || #BADA55 || #BADA55 || #BADA55 ||-->
+		<!-- #d00d1e || #d00d1e || #d00d1e ||-->
+		<!-- #BADA55 || #BADA55 || #BADA55 ||-->
 
 
 		<!-- PAGES CONTAINER -->
@@ -252,23 +265,42 @@
 
 			<!-- FIXED NAVBAR -->
 			<nav class="navbar navbar-default navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="glyphicon glyphicon-menu-hamburger"></span>
-						</button>
+				<div class="container-fluid">
+					<div class="navbar-header pull-left">
 						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
 					</div>
 
-					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<!--TODO insert this content dynamically depending on auth or !auth
+					<div class="navbar-header pull-right">
+
+						<ul id="nav-load" class="nav pull-right active">
+						</ul>
+
+						<ul id="nav-main" class="nav pull-right">
 								<li><a href="#signup" data-toggle="modal" data-target="#q-signup-modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 								<li><a href="#login" data-toggle="modal" data-target="#q-login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-							-->
 						</ul>
-					</div><!--/.nav-collapse -->
+
+						<ul id="nav-app" class="nav pull-right">
+								<li class="dropdown">
+									<a href="#" id="user-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
+									<ul class="dropdown-menu dropdown-menu-right dropdown-menu-nav" aria-labelledby="user-dropdown">
+										<li class="dropdown-header">logged in as:</li>
+										<li class="dropdown-user">FirstName LastName</li>
+										<li role="separator" class="divider"></li>
+								    <li><a href="#">Settings</a></li>
+										<li><input type="button" class="btn btn-link" value="connect multicard" disabled/></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="#">Found a bug?</a></li>
+										<li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> about</a></li>
+								    <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+									  </ul>
+								</li>
+						</ul>
+
+						<ul id="nav-settings" class="nav pull-right">
+								<li><a  href="#"><span class="glyphicon glyphicon-chevron-left"></span> Back</a></li>
+						</ul>
+					</div>
 
 				</div>
 			</nav>
@@ -277,62 +309,52 @@
 			<!-- LOAD VIEW -->
 			<div id="page-load" class="page active">
 				<span class="loading">Q</span>
-			</div>
+			</div><!-- end load view -->
 
 			<!-- MAIN VIEW -->
 			<div id="page-main" class="page">
-
-				<!-- PRESENTATION -->
 				<div class="jumbotron text-center">
-					<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
-					<br>
+					<div class="page-header">
+						<h1 class="brand-text"><strong>Q</strong><small> by ioio</small></h1>
+					</div>
 					<p>Created by students from Malmö University IxD program.</p>
-					<br>
 				</div>
-
 			</div><!-- end main view -->
-
-
 
 			<!-- APP VIEW -->
 			<div id="page-app" class="page">
-
-				<!-- CONTENT -->
 				<div class="well">
 
-					<form id="get-ticket">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-xs-2"></div>
-								<div class="col-xs-8">
-									<button id="get-ticket-button" type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#q-ticket-modal">Need help?</button>
-								</div>
-								<div class="col-xs-2"></div>
-							</div>
-						</div>
-					</form>
-
-					<form id="remove-ticket">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-xs-2"></div>
-								<div class="col-xs-8">
-									<button id="remove-ticket-button" type="button" class="btn btn-warning btn-block btn-lg">Step out</button>
-								</div>
-								<div class="col-xs-2"></div>
-							</div>
-						</div>
-					</form>
-
 					<!-- TODO Display current ticket -->
-					<div id="current-ticket" class="text-center">
+					<div id="module-current-ticket" class="text-center">
+						<p>You are currently not in queue</p>
+						<p>place:</p>
+						<p>est:</p>
 					</div>
 
-					<form id="help-others">
-						<div class="form-group">
-							<button id="help-others-button" type="button" class="btn center-block btn-success btn-sm" data-toggle="modal" data-target="#q-queue-modal">Help others</button>
-						</div>
-					</form>
+					<div id="module-take-ticket" class="module">
+						<form>
+							<div class="form-group">
+								<button id="get-ticket-button" type="button" class="btn btn-primary btn-block center-block btn-lg" data-toggle="modal" data-target="#q-ticket-modal">Need help?</button>
+							</div>
+						</form>
+					</div>
+
+					<div id="module-remove-ticket" class="module">
+						<form>
+							<div class="form-group">
+								<button id="remove-ticket-button" type="button" class="btn btn-warning btn-block center-block btn-lg">Step out</button>
+							</div>
+						</form>
+					</div>
+
+					<div id="module-help-ticket" class="module">
+						<form>
+							<div class="form-group">
+								<button id="help-others-button" type="button" class="btn btn-block center-block btn-lg btn-success" data-toggle="modal" data-target="#q-queue-modal">Help others</button>
+							</div>
+						</form>
+					</div>
 
 				</div>
 
@@ -343,9 +365,22 @@
 			<!-- TODO Settings page -->
 			<!-- SETTINGS VIEW -->
 			<div id="page-settings" class="page">
+				<div class="jumbotron text-center">
+					<div class="page-header">
+					  <h1>Settings</h1>
+					</div>
+					<p>This page will have all settings on it and a save/discard button at the bottom of the page. A nav item navigate the user back to the app page without saving unsaved changes.</p>
+					<p>User will be able to change all information, change password and email, in the future connect/change multicard etc. They are also able to completly delete their entire profile. Refrences to thier uid will persist but this will only refrence an unknown user.</p>
+					<br>
+				</div>
 			</div><!-- end settings view -->
 
 
+
+			<!-- TODO Create an alert template with a css style, or use bootstrap alerts-->
+			<!-- ALERT & NOTIFICATIONS -->
+			<div id="alert-div">
+			</div>
 
 			<!-- STICKY FOOTER -->
 			<footer>
@@ -354,13 +389,10 @@
 				</div>
 			</footer>
 
-		</div>
+		</div><!-- end pages container -->
 
 
-
-
-
-
+		<!-- FIXME Remove jQuery dependency by switching bootstrap for 'bootstrap nativ' -->
 		<script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
 		<script src="bower_components/firebase/firebase.js" charset="utf-8"></script>
@@ -372,9 +404,11 @@
 
 		<script type="text/javascript">
 			document.addEventListener('DOMContentLoaded', function(){
+				//timeoutOnly to see loading screen, remove before deploying
 				setTimeout(function(){
+					//ctrl.init();
 					view.init();
-					console.log('document is ready. I can sleep now');
+					app.init("https://mah-space-mono.firebaseio.com");
 				}, 1000);
 			});
 		</script>
