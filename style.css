@@ -23,6 +23,7 @@ nav ul {
 }
 
 footer {
+	z-index: 2000;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -33,6 +34,15 @@ footer {
 
 footer div{
 	padding-top: 10px;
+}
+
+
+#container-alerts{
+	z-index: 2000;
+	position: fixed;
+	bottom: 30px;
+	width: 100%;
+	padding: 0 10px;
 }
 
 .dropdown-menu-nav {

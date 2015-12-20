@@ -1,18 +1,12 @@
 /**
-Description: qView is in charge of displaying different pages according to callbacks set on different events. It's only dependency is radio.js and it should not execute any bootstrap functions at all, instead it can broadcast an event that triggers qController for bootstrap events and qApp for firebase events.
-Usage: qView returns a object called view. When the dom is loaded the main script runs view.init to set up event callbacks and to cache all element referenses it needs. It then sets correct page, navigation items and avaliable buttons. It is also responsible to render lists such as the queue, and to adapt the interface depending on user account type. (A user with a 'LIMITED' type account has fewer actions avaliable to them than a user with a 'EXPANDED' type account. See 'database-schema-overview.json' for all account types.)
+Description:
+qView is in charge of displaying different pages according to callbacks set on different events. It's only dependency is radio.js and jQuery.
+qView returns a object called view. When the dom is loaded the main script runs view.init to set up event callbacks and to cache all element referenses it needs. It then sets correct page, navigation items and avaliable buttons. It is also responsible to render lists such as the queue, and to adapt the interface depending on user account type. (A user with a 'LIMITED' type account has fewer actions avaliable to them than a user with a 'EXPANDED' type account. See 'database-schema-overview.json' for all account types.)
 **/
 
-/*
-	TODO Rewrite all view related code in a revealing module pattern
-	TODO Return a object that is instantiated directly (var view =)
-	TODO Subscribe to events from q-app.js
-	TODO move button elements into controller module
-*/
+var view = (function( win, doc, radio, $, undefined ) {
 
-var view = (function( win, doc, radio, undefined ) {
-
-	var pg = {}, nav = {};
+	var pg = {}, nav = {}, tmp = {}, $modals, $alerts;
 
 	function init(){
 		cacheDom();
@@ -32,6 +26,8 @@ var view = (function( win, doc, radio, undefined ) {
 			app: 			document.getElementById("nav-app"),
 			conf: 		document.getElementById("nav-settings")
 		};
+		$modals = $(".modal");
+		$alerts = $("#container-alerts");
 	};
 
 	//Displays the passed page and the related nav items. Is set to wait for a css animation so that the transition between pages do not feel abrupt
@@ -80,25 +76,42 @@ var view = (function( win, doc, radio, undefined ) {
 
 		//if the page is different from the one displayed already:
 		if(load.pg !== active.pg){
-			//setTimeout is there because of how css fade in/out is done
+			//broadcasts an event to indicate beginning changing page
+			radio("PAGE_CHANGE").broadcast(load,active);
+			//function that closes any open modal (page can change in background however)
+			hideModals();
+			//set style classes so that page and nav element fade out
 			active.pg.classList.add("fade");
 			active.nav.classList.add("fade");
+			//setTimeout is there because of how css fade in/out is done
 			setTimeout(function(){
 				active.pg.classList.remove("active","fade");
 				active.nav.classList.remove("active","fade");
 				load.pg.classList.add("active");
 				load.nav.classList.add("active");
 			}, 500);
-			//publish the event in case of another module need it
-			radio("PAGE_CHANGE").broadcast(load,active);
+			//broadcasts an event to indicate that the page have been changed
+			radio("PAGE_CHANGED").broadcast(load,active);
 		}
-
 
 	};
 
+	//FIXME store all active alerts in an array and remove only the correct one. Right now the timeout callback removes the first #alert-div it finds and this leads to unwanted behaviour.
 	//display alert that displays passed msg as passed type
-	function displayAlert(){
+	function displayAlert(msg, type) {
+		var wordArr =["Ops!", "Darn!", "Uh-oh...", "Err.", "Hm...", "It's probably not you, but...", "Ehh...", "Great Scott!", "Well...", "What happened?", "Um...", "Why did you think that would work?!", "Come on now...", "Don't be difficult."];
 
+		$alerts.append('<div id="alert-div" class="animated bounce alert fade in ' + type + '"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span><strong>' + wordArr[Math.floor(Math.random() * wordArr.length)] + '</strong> ' + msg + '</span>');
+
+		window.setTimeout(function() {
+			$("#alert-div").remove();
+		}, 4000);
+	}
+
+	function hideModals(){
+		if(document.body.className.indexOf("modal-open") >= 0){
+			$modals.modal("hide");
+		}
 	};
 
 	function setSubscriptions(){
@@ -114,10 +127,16 @@ var view = (function( win, doc, radio, undefined ) {
 		radio("SETTINGS").subscribe(function(){
 			displayPage("settings");
 		});
+		radio("APP").subscribe(function(){
+			displayPage("app");
+		});
+		radio("ALERT").subscribe(function(msg,type){
+			displayAlert(msg,type);
+		});
 	};
 
 	return {
 		init: init
 	};
 
-})( window, document, radio );
+})( window, document, radio, jQuery );

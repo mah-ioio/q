@@ -2,8 +2,6 @@
 
 Should write this app in a pubsub pattern and let all functions handling views subscribe to these topics and have a callback fired when publishing to these topics within the app
 
-Modules should be written so that they can functional degrade if javascript do not run
-
 
 init - public
 	set firebase references
