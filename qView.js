@@ -6,7 +6,9 @@ qView returns a object called view. When the dom is loaded the main script runs 
 
 var view = (function( win, doc, radio, $, undefined ) {
 
-	var pg = {}, nav = {}, tmp = {}, $modals, $alerts;
+	var pg = {}, nav = {}, $modals, $alerts;
+
+	var user = {};
 
 	function init(){
 		cacheDom();
@@ -26,8 +28,9 @@ var view = (function( win, doc, radio, $, undefined ) {
 			app: 			document.getElementById("nav-app"),
 			conf: 		document.getElementById("nav-settings")
 		};
-		$modals = $(".modal");
-		$alerts = $("#container-alerts");
+		$modals = 	$(".modal");
+		$alerts = 	$("#container-alerts");
+		$queue = 		$("#container-queue");
 	};
 
 	//Displays the passed page and the related nav items. Is set to wait for a css animation so that the transition between pages do not feel abrupt
@@ -106,7 +109,18 @@ var view = (function( win, doc, radio, $, undefined ) {
 		window.setTimeout(function() {
 			$("#alert-div").remove();
 		}, 4000);
-	}
+	};
+
+	function updateQueue(queue){
+		for(var i = 0; i < queue.length; i++){
+			$queue.append
+		}
+
+	};
+
+	function displayModal(query){
+		$(query).modal("show");
+	};
 
 	function hideModals(){
 		if(document.body.className.indexOf("modal-open") >= 0){
@@ -114,12 +128,25 @@ var view = (function( win, doc, radio, $, undefined ) {
 		}
 	};
 
+	function userUpdated(data){
+		user = {
+			firstName: data.child("info/first_name").val(),
+			lastName: data.child("info/last_name").val(),
+			studies: data.child("info/studies").val()
+		};
+		document.getElementById("dropdown-user").innerHTML = user.firstName + " " + user.lastName;
+	};
+
 	function setSubscriptions(){
 		radio("LOGGED_OUT").subscribe(function(){
 			displayPage("main");
+			user = {};
 		});
 		radio("LOGGED_IN").subscribe(function(){
 			displayPage("app");
+		});
+		radio("MISSING_INFO").subscribe(function(){
+			displayModal("#q-complete-info-modal");
 		});
 		radio("LOADING").subscribe(function(){
 			displayPage("load");
@@ -132,6 +159,14 @@ var view = (function( win, doc, radio, $, undefined ) {
 		});
 		radio("ALERT").subscribe(function(msg,type){
 			displayAlert(msg,type);
+		});
+		radio("USER_DATA").subscribe(function(data){
+			//close specific missing info module here
+			$('#q-complete-info-modal').modal('hide');
+			userUpdated(data);
+		});
+		radio("QUEUE_UPDATE").subscribe(function(queue){
+			updateQueue(queue);
 		});
 	};
 

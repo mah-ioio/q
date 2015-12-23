@@ -12,7 +12,6 @@
 
 		<!-- TODO Found a bug? modal -->
 		<!-- TODO About us! modal -->
-		<!--TODO Welcome modal/slides for first logins -->
 
 		<!-- MODALS CONTAINER -->
 		<div id="container-modals" class="container-fluid">
@@ -20,7 +19,6 @@
 			<!-- SIGNUP MODAL -->
 			<div id="q-signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signup-modal">
 				<div class="modal-dialog modal-sm">
-
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -105,7 +103,7 @@
 						<div class="modal-footer">
 		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 		          <p>No account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal">Sign Up!</a></p>
-		          <p>Forgot <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal">Password?</a></p>
+		          <p>Forgot <a id="reset-password-button" href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal">Password?</a></p>
 		        </div>
 					</div>
 				</div>
@@ -130,13 +128,55 @@
 							</form>
 						</div>
 						<div class="modal-footer text-center" style="text-align: center;">
-		          <p>If you do not recive a mail or if you are still unable to login to your account, please contact your teacher or send a mail to <span class="brand-text stamp">Q by ioio</span> support.</p>
+		          <p>If you do not recive a mail or if you are still unable to login to your account, please contact your teacher or send an email directly to <span class="brand-text stamp">Q by ioio</span> support.</p>
 							<button class="btn btn-link">support@byioio.com</button>
 		        </div>
 					</div>
 				</div>
 			</div>
 
+			<!-- COMPLETET INFO MODAL -->
+			<div id="q-complete-info-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="complete-info-modal" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Complete your profile</h4>
+						</div>
+						<div class="modal-body">
+							<form id="form-complete">
+								<div class="form-group">
+									<label class="sr-only" for="complete-first-name">First name</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+										<input type="text" class="form-control" id="complete-first-name" placeholder="First name">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="complete-last-name">Last name</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+										<input type="text" class="form-control" id="complete-last-name" placeholder="Last name">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="complete-studies-name">Last name</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-education"></span></div>
+										<input type="text" class="form-control" id="complete-studies-name" placeholder="Program/Course">
+									</div>
+								</div>
+								<div class="form-group">
+									<button id="complete-info-button" type="button" class="btn btn-success btn-block">All done!</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer" style="text-align: center;">
+		          <p>Your name is whatever you wanna go by, but remember that it is going to be displayed on screens around the workshop so nothing too explicit. Please! Also, some students only have one single course while others attend a program. Fill in your studies as you see fit.</p>
+							<p>Choose clear names to make it easy for your teacher to find you when you need help.</p>
+		        </div>
+					</div>
+				</div>
+			</div>
 
 			<!-- FIXME Ticket modal -->
 			<!-- TICKET MODAL -->
@@ -202,7 +242,6 @@
 				</div>
 			</div>
 
-			<!--FIXME CONFIRM remove-ticket MODAL -->
 			<!-- TICKET MODAL -->
 			<div id="q-remove-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
 				<div class="modal-dialog modal-sm">
@@ -212,6 +251,7 @@
 							<h4 class="modal-title">Remove ticket?</h4>
 						</div>
 						<div class="modal-body">
+							<p>You will lose your place in the queue.</p>
 							<form id="form-remove">
 								<div class="form-group">
 									<button id="remove-ticket-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
@@ -232,13 +272,14 @@
 							<h4 class="modal-title">Current queue</h4>
 						</div>
 						<div class="modal-body">
-							<div id="queue-div"></div>
+							<div id="container-queue"></div>
+
 							<div class="dropdown">
-								<button id="dLabel" class="btn btn-default btn-md btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<button id="drop-label" class="btn btn-default btn-md btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<span class="glyphicon glyphicon-cog"></span>
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="drop-label">
 									<li><a href="#"><span class="glyphicon glyphicon-ok text-success"></span> Help</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span> Move one up</a></li>
@@ -285,7 +326,7 @@
 									<a href="#" id="user-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
 									<ul class="dropdown-menu dropdown-menu-right dropdown-menu-nav" aria-labelledby="user-dropdown">
 										<li class="dropdown-header">logged in as:</li>
-										<li class="dropdown-user">FirstName LastName</li>
+										<li id="dropdown-user">FirstName LastName</li>
 										<li role="separator" class="divider"></li>
 								    <li><a id="settings-button" href="#">Settings</a></li>
 										<li><input id="multicard-button" type="button" class="btn btn-link" value="connect multicard" disabled/></li>
@@ -330,6 +371,8 @@
 						<p>You are currently not in queue</p>
 						<p>place:</p>
 						<p>est:</p>
+						<p>Where:</p>
+						<p>About:</p>
 					</div>
 
 					<!-- FIXME Take ticket -->

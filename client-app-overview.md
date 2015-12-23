@@ -125,3 +125,19 @@ glitch()
 	animatable attributes are set with semi-random values
 	setTimeout with random value
 		reset = true
+
+
+
+Ticket module
+Work with the physicality
+Shows bottom half of a "paper"-queue ticket.
+Pull down and release to take a ticket.
+Current status is displayed in the middle part of the ticket
+Swipe left or right to discard the ticket
+
+Queue module
+Writes all the queue items in order
+If account is limited
+	place a "help" button in all queue items
+else
+	place dropdown in all queue items

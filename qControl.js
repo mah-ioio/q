@@ -10,7 +10,6 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 
 	function init(){
 		cacheDom();
-		setSubscriptions();
 		setListeners();
 	};
 
@@ -25,18 +24,19 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			conf:			document.getElementById("settings-button"),
 			confB:		document.getElementById("back-button"),
 			about:		document.getElementById("about-button"),
-			bug:			document.getElementById("bug-button")
+			bug:			document.getElementById("bug-button"),
+			pwdRes:		document.getElementById("reset-password-button"),
+			compl:		document.getElementById("complete-info-button")
 		};
 		form = {
 			signup:		document.getElementById("form-signup"),
 			login:		document.getElementById("form-login"),
-			ticket:		document.getElementById("form-ticket")
+			ticket:		document.getElementById("form-ticket"),
+			compl: 		document.getElementById("form-complete")
 		};
 	};
 
-	function setSubscriptions(){
-	};
-
+	//TODO try/catch around all validation methods to keep unexcpected results from breaking the program
 	//FIXME find a better way of getting values from a form, maybe an generic method for all forms?
 	function signupValidation(){
 		var data = [];
@@ -61,8 +61,24 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	};
 
 	function loginValidation(){
-
+		var data = [];
+		for(var i = 0; i < form.login.length; i++){
+			if(form.login[i].tagName == "INPUT"){
+				data[i] = form.login[i].value;
+			}
+		}
+		app.login(data[0],data[1]);
 	};
+
+	function completeInfoValidation(){
+		var data = [];
+		for(var i = 0; i < form.compl.length; i++){
+			if(form.login[i].tagName == "INPUT"){
+				data[i] = form.compl[i].value;
+			}
+		}
+		app.updateUserData(data[0],data[1],data[2]);
+	}
 
 	function setListeners(){
 		btn.signup.addEventListener("click", function(){
@@ -72,7 +88,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			loginValidation();
 		});
 		btn.logout.addEventListener("click", function(){
-			console.log("CLICKED!!!");
+			app.logout();
 		});
 		btn.getTick.addEventListener("click", function(){
 			console.log("CLICKED!!!");
@@ -91,6 +107,12 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		});
 		btn.bug.addEventListener("click", function(){
 			console.log("CLICKED!!!");
+		});
+		btn.pwdRes.addEventListener("click", function(){
+			console.log("CLICKED!!!");
+		});
+		btn.compl.addEventListener("click", function(){
+			completeInfoValidation();
 		});
 	};
 
