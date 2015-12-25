@@ -10,13 +10,13 @@ Instead of calling page change when the login method runs, a auth listener (root
 	TODO Method for change mail
 */
 
-var app = (function( win, doc, radio, Firebase, undefined){
+var app = (function( radio, Firebase, undefined){
 
 	var root;
 	var ref = {};
 	var uid;
 	var users;
-	var appListenerSet = false;
+
 	var userListenersSet = false;
 
 
@@ -78,7 +78,7 @@ var app = (function( win, doc, radio, Firebase, undefined){
 					radio("MISSING_INFO").broadcast();
 				} else {
 					//else or if user change any information make sure this is reflected in the view
-					radio("USER_DATA").broadcast(data);
+					radio("USER_DATA").broadcast(data.val());
 				}
 			});
 
@@ -109,7 +109,8 @@ var app = (function( win, doc, radio, Firebase, undefined){
 				radio("QUEUE_UPDATE").broadcast(queue);
 			});
 
-			ref.ticket.on("value", function(data){
+			ref.ticket.on("value", function(ticket){
+				radio("TICKET_UPDATE").broadcast(ticket.val());
 			});
 
 			userListenersSet = true;
@@ -172,10 +173,6 @@ var app = (function( win, doc, radio, Firebase, undefined){
 		root.unauth();
 	};
 
-	function getUserData(){
-
-	};
-
 	function updateUserData(firstName, lastName, studies){
 		ref.user.child("info").update({
 			first_name: firstName,
@@ -184,12 +181,23 @@ var app = (function( win, doc, radio, Firebase, undefined){
 		});
 	};
 
+	function takeTicket(data){
+		ref.ticket.update(data);
+		ref.ticket.update({ ticket_id: Firebase.ServerValue.TIMESTAMP });
+	};
+
+	function removeTicket(){
+		ref.ticket.update({ticket_id: 0});
+	};
+
 	return {
 		init,
 		signup,
 		login,
 		logout,
-		updateUserData
+		updateUserData,
+		takeTicket,
+		removeTicket
 	};
 
-})( window, document, radio, Firebase );
+})( radio, Firebase );

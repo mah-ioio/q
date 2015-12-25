@@ -17,16 +17,16 @@ var view = (function( win, doc, radio, $, undefined ) {
 
 	function cacheDom(){
 		pg = {
-			load:			document.getElementById("page-load"),
-			main: 		document.getElementById("page-main"),
-			app: 			document.getElementById("page-app"),
-			conf: 		document.getElementById("page-settings")
+			load:			doc.getElementById("page-load"),
+			main: 		doc.getElementById("page-main"),
+			app: 			doc.getElementById("page-app"),
+			conf: 		doc.getElementById("page-settings")
 		};
 		nav = {
-			load:			document.getElementById("nav-load"),
-			main: 		document.getElementById("nav-main"),
-			app: 			document.getElementById("nav-app"),
-			conf: 		document.getElementById("nav-settings")
+			load:			doc.getElementById("nav-load"),
+			main: 		doc.getElementById("nav-main"),
+			app: 			doc.getElementById("nav-app"),
+			conf: 		doc.getElementById("nav-settings")
 		};
 		$modals = 	$(".modal");
 		$alerts = 	$("#container-alerts");
@@ -111,9 +111,10 @@ var view = (function( win, doc, radio, $, undefined ) {
 		}, 4000);
 	};
 
+	//TODO queue templates
 	function updateQueue(queue){
 		for(var i = 0; i < queue.length; i++){
-			$queue.append
+			//$queue.append
 		}
 
 	};
@@ -123,18 +124,31 @@ var view = (function( win, doc, radio, $, undefined ) {
 	};
 
 	function hideModals(){
-		if(document.body.className.indexOf("modal-open") >= 0){
+		if(doc.body.className.indexOf("modal-open") >= 0){
 			$modals.modal("hide");
 		}
 	};
 
-	function userUpdated(data){
-		user = {
-			firstName: data.child("info/first_name").val(),
-			lastName: data.child("info/last_name").val(),
-			studies: data.child("info/studies").val()
-		};
-		document.getElementById("dropdown-user").innerHTML = user.firstName + " " + user.lastName;
+	function updatedUser(data){
+		user = data;
+		doc.getElementById("dropdown-user").innerHTML = data.info.first_name + " " + data.info.last_name;
+	};
+
+	//TODO implement number in queue, tags, and estimation of time
+	function updateTicket(ticket){
+		if(ticket.ticket_id > 0){
+			doc.getElementById("queue-header").innerHTML = "Your are in the queue";
+			doc.getElementById("queue-number").innerHTML = "unimplemented";
+			doc.getElementById("queue-est").innerHTML = "unimplemented";
+			doc.getElementById("queue-location").innerHTML = ticket.location;
+			doc.getElementById("queue-tags").innerHTML = "unimplemented";
+		} else {
+			doc.getElementById("queue-header").innerHTML = "Your are not in the queue";
+			doc.getElementById("queue-number").innerHTML = "";
+			doc.getElementById("queue-est").innerHTML = "";
+			doc.getElementById("queue-location").innerHTML = "";
+			doc.getElementById("queue-tags").innerHTML = "";
+		}
 	};
 
 	function setSubscriptions(){
@@ -163,15 +177,19 @@ var view = (function( win, doc, radio, $, undefined ) {
 		radio("USER_DATA").subscribe(function(data){
 			//close specific missing info module here
 			$('#q-complete-info-modal').modal('hide');
-			userUpdated(data);
+			updatedUser(data);
 		});
 		radio("QUEUE_UPDATE").subscribe(function(queue){
 			updateQueue(queue);
 		});
+		radio("TICKET_UPDATE").subscribe(function(ticket){
+			updateTicket(ticket);
+		});
 	};
 
 	return {
-		init: init
+		init,
+		hideModals
 	};
 
 })( window, document, radio, jQuery );

@@ -59,7 +59,7 @@ footer div{
 	margin: 4px 0 !important;
 }
 
-.dropdown-user {
+#dropdown-user {
 	padding: 0 6px;
 	font-style: italic;
 	color: #6A6A6A;

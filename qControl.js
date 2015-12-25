@@ -16,23 +16,23 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	function cacheDom(){
 		btn = {
 			//TODO add all buttons
-			signup: 	document.getElementById("signup-button"),
-			login: 		document.getElementById("login-button"),
-			logout: 	document.getElementById("logout-button"),
-			getTick: 	document.getElementById("get-ticket-button"),
-			rmTick: 	document.getElementById("remove-ticket-button"),
-			conf:			document.getElementById("settings-button"),
-			confB:		document.getElementById("back-button"),
-			about:		document.getElementById("about-button"),
-			bug:			document.getElementById("bug-button"),
-			pwdRes:		document.getElementById("reset-password-button"),
-			compl:		document.getElementById("complete-info-button")
+			signup: 	doc.getElementById("signup-button"),
+			login: 		doc.getElementById("login-button"),
+			logout: 	doc.getElementById("logout-button"),
+			getTick: 	doc.getElementById("get-ticket-button"),
+			rmTick: 	doc.getElementById("remove-ticket-button"),
+			conf:			doc.getElementById("settings-button"),
+			confB:		doc.getElementById("back-button"),
+			about:		doc.getElementById("about-button"),
+			bug:			doc.getElementById("bug-button"),
+			pwdRes:		doc.getElementById("reset-password-button"),
+			compl:		doc.getElementById("complete-info-button")
 		};
 		form = {
-			signup:		document.getElementById("form-signup"),
-			login:		document.getElementById("form-login"),
-			ticket:		document.getElementById("form-ticket"),
-			compl: 		document.getElementById("form-complete")
+			signup:		doc.getElementById("form-signup"),
+			login:		doc.getElementById("form-login"),
+			ticket:		doc.getElementById("form-ticket"),
+			compl: 		doc.getElementById("form-complete")
 		};
 	};
 
@@ -73,12 +73,62 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	function completeInfoValidation(){
 		var data = [];
 		for(var i = 0; i < form.compl.length; i++){
-			if(form.login[i].tagName == "INPUT"){
+			if(form.compl[i].tagName == "INPUT"){
 				data[i] = form.compl[i].value;
 			}
 		}
 		app.updateUserData(data[0],data[1],data[2]);
-	}
+	};
+
+	function ticketValidation(){
+		//set default ticket values
+		var ticketData = {
+			est: 5,
+			location: "workshop",
+			tags: {
+				workshop_machines: false,
+				ddd_printer: false,
+				laser_cutter: false,
+				other_questions: false
+			}
+		};
+
+		var formData = form.ticket.getElementsByClassName("active");
+		var locationData = form.ticket[4].value;
+
+		ticketData.location = locationData;
+
+		for(item in formData){
+			switch(item) {
+				case "workshop-machines":
+					ticketData.tags.workshop_machines = true;
+					break;
+				case "laser-cutter":
+					ticketData.tags.laser_cutter = true;
+					break;
+				case "3d-printer":
+					ticketData.tags.ddd_printer = true;
+					break;
+				case "other-questions":
+					ticketData.tags.other_questions = true;
+					break;
+				case "5min":
+					ticketData.est = 5;
+					break;
+				case "10min":
+					ticketData.est = 10;
+					break;
+				default:
+					break;
+			}
+		};
+
+		//TODO check if atleast one tag is clicked, if not alert user
+
+		app.takeTicket(ticketData);
+		view.hideModals();
+
+	};
 
 	function setListeners(){
 		btn.signup.addEventListener("click", function(){
@@ -91,10 +141,11 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			app.logout();
 		});
 		btn.getTick.addEventListener("click", function(){
-			console.log("CLICKED!!!");
+			ticketValidation();
 		});
 		btn.rmTick.addEventListener("click", function(){
-			console.log("CLICKED!!!");
+			app.removeTicket();
+			view.hideModals();
 		});
 		btn.conf.addEventListener("click", function(){
 			radio("SETTINGS").broadcast();
