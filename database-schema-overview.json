@@ -92,4 +92,11 @@ bugs:{
 			msg: "String message"
 		}
 	}
+},
+status:{
+	$uid: {
+		status: "IDLE",
+		current_event: "TICKET_TAKEN",
+		uid: client.uid
+	}
 }

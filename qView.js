@@ -113,8 +113,17 @@ var view = (function( win, doc, radio, $, undefined ) {
 
 	//TODO queue templates
 	function updateQueue(queue){
+		$queue.empty();
 		for(var i = 0; i < queue.length; i++){
-			//$queue.append
+			console.log(queue[i]);
+
+			if(user.account === "FULL"){
+				//$queue.append with admin buttons
+			} else {
+				//$queue.append without buttons
+				$queue.append("<div>" + queue[i].user.info.first_name + "</div>");
+			}
+
 		}
 
 	};

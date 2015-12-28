@@ -5,9 +5,11 @@ Instead of calling page change when the login method runs, a auth listener (root
 **/
 
 /*
+	TODO Write complete data to firebase
 	TODO Method for change password
 	TODO Method for reset password
 	TODO Method for change mail
+	FIXME changes to tickets currently create two callbacks, why?
 */
 
 var app = (function( radio, Firebase, undefined){
@@ -34,6 +36,7 @@ var app = (function( radio, Firebase, undefined){
 	function setUserRefs(uid){
 		ref.user = ref.users.child(uid);
 		ref.ticket = ref.tickets.child(uid);
+		ref.log = root.child("logs/"+uid);
 	};
 
 	function setAuthListener(){
@@ -75,6 +78,8 @@ var app = (function( radio, Firebase, undefined){
 					}
 				}
 				if(missingInfo){
+					//if missing info is true this means that the profile is brand new and the user data needs to be set up
+					setUserData();
 					radio("MISSING_INFO").broadcast();
 				} else {
 					//else or if user change any information make sure this is reflected in the view
@@ -106,11 +111,15 @@ var app = (function( radio, Firebase, undefined){
 						}
 					}
 				});
+				console.log("queue updated");
 				radio("QUEUE_UPDATE").broadcast(queue);
 			});
 
 			ref.ticket.on("value", function(ticket){
-				radio("TICKET_UPDATE").broadcast(ticket.val());
+				if(ticket.val() !== null){
+					console.log("ticket updated");
+					radio("TICKET_UPDATE").broadcast(ticket.val());
+				}
 			});
 
 			userListenersSet = true;
@@ -173,21 +182,44 @@ var app = (function( radio, Firebase, undefined){
 		root.unauth();
 	};
 
+	function setUserData(){
+		ref.user.update({
+			account: "LIMITED",
+			status: "IDLE",
+			licenses: {
+				saw: false,
+				drill: false,
+				ddd_printer: false,
+				laser_cutter: false
+			}
+		});
+	};
+
 	function updateUserData(firstName, lastName, studies){
 		ref.user.child("info").update({
 			first_name: firstName,
 			last_name: lastName,
-			studies: studies
+			studies: studies,
+			//not yet implemented
+			avatar: "img.jpg",
+			color: "#BADA55"
 		});
 	};
 
 	function takeTicket(data){
 		ref.ticket.update(data);
-		ref.ticket.update({ ticket_id: Firebase.ServerValue.TIMESTAMP });
 	};
 
 	function removeTicket(){
 		ref.ticket.update({ticket_id: 0});
+	};
+
+	function logEvent(uid, type){
+		ref.log.push({
+			time: Firebase.ServerValue.TIMESTAMP,
+			set_by: uid,
+			event_type: type
+		});
 	};
 
 	return {

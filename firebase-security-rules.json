@@ -1,0 +1,22 @@
+{
+    "rules": {
+      "users": {
+        ".read": "auth.uid != null",
+        "$uid": {
+          ".write": "auth.uid != null && auth.uid == $uid"
+        }
+      },
+      "tickets": {
+        ".read": "auth.uid != null",
+        "$uid": {
+          ".write": "auth.uid != null && auth.uid == $uid || root.child('users').child(auth.uid).child('account').val() == 'FULL'"
+        }
+      },
+      "logs":{
+        ".read": "auth.uid != null",
+        "$uid": {
+          ".write": "auth.uid != null && auth.uid == $uid"
+        }
+      }
+    }
+}

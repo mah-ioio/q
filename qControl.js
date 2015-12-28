@@ -83,6 +83,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	function ticketValidation(){
 		//set default ticket values
 		var ticketData = {
+			ticket_id: Firebase.ServerValue.TIMESTAMP,
 			est: 5,
 			location: "workshop",
 			tags: {
