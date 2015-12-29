@@ -93,6 +93,7 @@ var app = (function( radio, Firebase, undefined){
 					if(!isNaN(ticket.val().ticket_id) && ticket.val().ticket_id !== 0 ){
 						var uid = ticket.key();
 						var obj = {
+							uid: uid,
 							user: users[uid],
 							ticket: ticket.val()
 						};
@@ -210,8 +211,12 @@ var app = (function( radio, Firebase, undefined){
 		ref.ticket.update(data);
 	};
 
-	function removeTicket(){
-		ref.ticket.update({ticket_id: 0});
+	function removeTicket(uid){
+		if(uid === "user"){
+			ref.ticket.update({ticket_id: 0});
+		} else {
+			ref.tickets.child(uid).update({ticket_id: 0});
+		}
 	};
 
 	function logEvent(uid, type){

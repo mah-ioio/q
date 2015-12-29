@@ -6,7 +6,8 @@ It also handles form validation and then sends validated data directly to qApp. 
 
 var ctrl = (function( win, doc, radio, $, undefined ) {
 
-	var btn = {}, form = {}, modals = [];
+	var btn = {}, form = {}, modals = [], queueListeners = [];
+
 
 	function init(){
 		cacheDom();
@@ -145,7 +146,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			ticketValidation();
 		});
 		btn.rmTick.addEventListener("click", function(){
-			app.removeTicket();
+			app.removeTicket("user");
 			view.hideModals();
 		});
 		btn.conf.addEventListener("click", function(){
@@ -168,8 +169,35 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		});
 	};
 
+	function addQueueListener(id, uid){
+		//TODO add new object to queueListeners array for easy removal later
+		var target = doc.getElementById(id);
+		queueListeners.push({
+			el: target,
+			id: id,
+			uid: uid
+		});
+		console.log(queueListeners);
+		target.addEventListener("click", function(){queueCallback(uid)});
+	};
+
+	function queueCallback(uid){
+		console.log("userid = "+uid);
+	};
+
+	function removeQueueListener(cmd){
+		if(cmd === "all"){
+			queueListeners.forEach(function(element, index, array){
+				element.el.removeEventListener("click", function(){queueCallback});
+			});
+			queueListeners = [];
+		}
+	};
+
 	return {
-		init: init
+		init,
+		addQueueListener,
+		removeQueueListener
 	};
 
 })( window, document, radio, jQuery );

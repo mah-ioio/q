@@ -114,14 +114,19 @@ var view = (function( win, doc, radio, $, undefined ) {
 	//TODO queue templates
 	function updateQueue(queue){
 		$queue.empty();
+		ctrl.removeQueueListener("all");
 		for(var i = 0; i < queue.length; i++){
 			console.log(queue[i]);
 
 			if(user.account === "FULL"){
 				//$queue.append with admin buttons
+				var id = "queue-btn-"+[i];
+				var btn = '<div class="form-group"><button id="'+id+'" type="button" class="btn btn-xs btn-success pull-right" data-toggle="modal" value="' +queue[i].uid+ '">Help</button></div>';
+				$queue.append('<li class="list-group-item"><span class="pull-left">' + queue[i].user.info.first_name +'</span>' + btn + '</li>');
+				ctrl.addQueueListener(id, queue[i].uid);
 			} else {
 				//$queue.append without buttons
-				$queue.append("<div>" + queue[i].user.info.first_name + "</div>");
+				$queue.append('<li class="list-group-item"><span class="pull-left">' + queue[i].user.info.first_name +'</span></li>');
 			}
 
 		}
