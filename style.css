@@ -125,6 +125,10 @@ footer div{
 	animation: fadeOut 0.5s;
 }
 
+.mark-user {
+	background-color: #FAF8F4;
+}
+
 /*////////////*/
 /* ANIMATIONS */
 /*////////////*/

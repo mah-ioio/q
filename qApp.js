@@ -83,7 +83,7 @@ var app = (function( radio, Firebase, undefined){
 					radio("MISSING_INFO").broadcast();
 				} else {
 					//else or if user change any information make sure this is reflected in the view
-					radio("USER_DATA").broadcast(data.val());
+					radio("USER_DATA").broadcast(data.key(),data.val());
 				}
 			});
 
