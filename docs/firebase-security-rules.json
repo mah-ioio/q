@@ -7,7 +7,7 @@
         }
       },
       "tickets": {
-        ".read": "auth.uid != null",
+        ".read": "true",
         "$uid": {
           ".write": "auth.uid != null && auth.uid == $uid || root.child('users').child(auth.uid).child('account').val() == 'FULL'"
         }
