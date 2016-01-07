@@ -171,6 +171,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 
 	function addQueueListener(id, uid){
 		//TODO add new object to queueListeners array for easy removal later
+
 		var target = doc.getElementById(id);
 		queueListeners.push({
 			el: target,

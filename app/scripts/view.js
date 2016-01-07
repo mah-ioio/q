@@ -126,7 +126,7 @@ var view = (function( win, doc, radio, $, undefined ) {
 		for(var i = 0; i < queue.length; i++){
 			console.log(queue[i]);
 			var no = i+1;
-			var name = '<span class="pull-left">' + no + " " + queue[i].user.info.first_name +" "+ queue[i].user.info.last_name + '</span>';
+			var name = '<div class="col-xs-9">' + no + " " + queue[i].user.info.first_name +" "+ queue[i].user.info.last_name + '</div>';
 			var backgroundClass = "";
 			if(queue[i].uid === user.uid){
 				backgroundClass = "mark-user";
@@ -134,8 +134,7 @@ var view = (function( win, doc, radio, $, undefined ) {
 				userObj = queue[i];
 				userNo = no;
 			}
-			var id = "";
-			var btn = "";
+
 			if(queue[i].ticket.est != undefined){
 				estimation += queue[i].ticket.est;
 			}
@@ -144,17 +143,20 @@ var view = (function( win, doc, radio, $, undefined ) {
 
 			switch (user.account){
 				case "FULL":
-					id = "queue-btn-"+[i];
-					btn = '<div class="form-group"><button id="'+id+'" type="button" class="btn btn-xs btn-success pull-right" data-toggle="modal" value="' +queue[i].uid+ '">Help</button></div>';
+					var btnId = "queue-btn-"+[i];
+					var btn = '<div class="form-group col-xs-3"><button id="'+btnId+'" type="button" class="btn btn-xs btn-success btn-block" data-toggle="modal" value="' +queue[i].uid+ '">Help</button></div>';
 
 					//var icons = '<div class="pull-left"><span class="glyphicon glyphicon-ok"></span>'+'<span class="glyphicon glyphicon-ok"></span>'+'<span class="glyphicon glyphicon-ok"></span></div>';
 					//var dropdown = '<div class="dropdown"><button id="drop-label" class="pull-right btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right" aria-labelledby="drop-label"><li><a href="#"><span class="glyphicon glyphicon-ok text-success"></span> Help</a></li><li role="separator" class="divider"></li><li><a href="#"><span class="glyphicon glyphicon-chevron-up"></span> Move one up</a></li><li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Move one down</a></li><li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Push to last</a></li><li role="separator" class="divider"></li><li><a href="#"><span class="glyphicon glyphicon-remove text-danger"></span> Remove from queue</a></li></ul></div>';
+
+					$queue.append('<li class="list-group-item '+backgroundClass+'"><div class="row">' + name + btn +'</div></li>');
+					ctrl.addQueueListener(btnId, queue[i].uid);
 					break;
 				case "LIMITED":
+					$queue.append('<li class="list-group-item '+backgroundClass+'"><div class="row">' + name +'</div></li>');
 					break;
 			}
-			$queue.append('<li class="list-group-item '+backgroundClass+'">' + name + btn +'</li>');
-			ctrl.addQueueListener(id, queue[i].uid);
+
 		}
 		if(userInQueue){
 			updateTicket(userObj,userNo,estimation);

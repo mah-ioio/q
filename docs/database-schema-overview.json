@@ -20,6 +20,7 @@ users:{
 		}
 	}
 },
+lab-status: Firebase.ServerValue.TIMESTAMP || 0,
 tickets:{
 	$uid:{
 		ticket_id: Firebase.ServerValue.TIMESTAMP,

@@ -9,7 +9,10 @@
       "tickets": {
         ".read": "true",
         "$uid": {
-          ".write": "auth.uid != null && auth.uid == $uid || root.child('users').child(auth.uid).child('account').val() == 'FULL'"
+          ".write": "auth.uid != null && auth.uid == $uid || root.child('users').child(auth.uid).child('account').val() == 'FULL'",
+          "ticket_id": {
+            ".write": value === Firebase.ServerValue.TIMESTAMP
+          }
         }
       },
       "logs":{
