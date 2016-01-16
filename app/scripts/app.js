@@ -58,8 +58,6 @@ var app = (function( radio, Firebase, undefined){
 	function setAppListeners(){
 		ref.users.on("value", function(usersSnapshot){
 			users = usersSnapshot.val();
-			// console.log("logging users:");
-			// console.log(users);
 		});
 	};
 
@@ -89,38 +87,38 @@ var app = (function( radio, Firebase, undefined){
 
 			ref.tickets.on("value", function(tickets){
 				var queue = [];
+
 				tickets.forEach(function(ticket){
 					if(!isNaN(ticket.val().ticket_id) && ticket.val().ticket_id !== 0 ){
 						var uid = ticket.key();
 						var obj = {
 							uid: uid,
 							user: users[uid],
-							ticket: ticket.val()
+							ticket: ticket.val(),
+							modVal: modVal = ticket.val().push - ticket.val().pull
 						};
+
 						if(queue.length === 0){
 							queue.push(obj);
 						} else {
-							for(var i = 0; i < queue.length; i++){
-								if(ticket.val().ticket_id < queue[i].ticket.ticket_id){
-									queue.splice(i, 0, obj);
-									break;
-								} else {
-									queue.push(obj);
-									break;
+							if(ticket.val().ticket_id > queue[queue.length-1].ticket.ticket_id){
+								queue.push(obj);
+							} else {
+								for(var i = 0; i < queue.length; i++){
+									if(ticket.val().ticket_id < queue[i].ticket.ticket_id){
+										queue.splice(i, 0, obj);
+										break;
+									}
 								}
 							}
 						}
 					}
 				});
+
+				//sort by push/pull
+
 				console.log("queue updated");
 				radio("QUEUE_UPDATE").broadcast(queue);
-			});
-
-			ref.ticket.on("value", function(ticket){
-				if(ticket.val() !== null){
-					console.log("ticket updated");
-					radio("TICKET_UPDATE").broadcast(ticket.val());
-				}
 			});
 
 			userListenersSet = true;
@@ -162,11 +160,9 @@ var app = (function( radio, Firebase, undefined){
 	//If the boolean (checkbox) is false the session expires on browser closing
 	//If it is true it is set to the default log in time which is persistent
 	//It does not explicitly call any other function, the auth callback handles the rest of the app setup methods
-	function login(email,password,checkbox){
-		var rememberMe = "sessionOnly";
-		if(checkbox){
-			rememberMe = "default";
-		}
+	function login(email,password){
+		var rememberMe = "default";
+
 		root.authWithPassword({
 			email,
 			password
@@ -186,13 +182,16 @@ var app = (function( radio, Firebase, undefined){
 	function setUserData(){
 		ref.user.update({
 			account: "LIMITED",
-			status: "IDLE",
-			licenses: {
-				saw: false,
-				drill: false,
+			status: "IDLE"
+			/*licenses: {
+				one: false,
+				two: false,
+				three: false,
+				four: false,
 				ddd_printer: false,
-				laser_cutter: false
-			}
+				laser_cutter: false,
+				vaccum: false
+			}*/
 		});
 	};
 
@@ -219,6 +218,7 @@ var app = (function( radio, Firebase, undefined){
 		}
 	};
 
+	/*
 	function logEvent(uid, type){
 		ref.log.push({
 			time: Firebase.ServerValue.TIMESTAMP,
@@ -226,6 +226,7 @@ var app = (function( radio, Firebase, undefined){
 			event_type: type
 		});
 	};
+	*/
 
 	return {
 		init,

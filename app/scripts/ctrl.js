@@ -8,6 +8,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 
 	var btn = {}, form = {}, modals = [], queueListeners = [];
 
+	var currentTicket;
 
 	function init(){
 		cacheDom();
@@ -24,10 +25,11 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			rmTick: 	doc.getElementById("remove-ticket-button"),
 			conf:			doc.getElementById("settings-button"),
 			confB:		doc.getElementById("back-button"),
-			about:		doc.getElementById("about-button"),
+			//about:		doc.getElementById("about-button"),
 			bug:			doc.getElementById("bug-button"),
-			pwdRes:		doc.getElementById("reset-password-button"),
-			compl:		doc.getElementById("complete-info-button")
+			//pwdRes:		doc.getElementById("reset-password-button"),
+			compl:		doc.getElementById("complete-info-button"),
+			clearTick:doc.getElementById("clear-ticket-button")
 		};
 		form = {
 			signup:		doc.getElementById("form-signup"),
@@ -92,14 +94,15 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 				ddd_printer: false,
 				laser_cutter: false,
 				other_questions: false
-			}
+			},
+			push: 0,
+			pull: 0
 		};
 
-		var formData = form.ticket.getElementsByClassName("active");
-		var locationData = form.ticket[4].value;
-
+		var locationData = form.ticket[0].value;
 		ticketData.location = locationData;
 
+		var formData = form.ticket.getElementsByClassName("active");
 		for(item in formData){
 			switch(item) {
 				case "workshop-machines":
@@ -155,17 +158,20 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		btn.confB.addEventListener("click", function(){
 			radio("APP").broadcast();
 		});
-		btn.about.addEventListener("click", function(){
+		/*btn.about.addEventListener("click", function(){
 			console.log("CLICKED!!!");
-		});
+		});*/
 		btn.bug.addEventListener("click", function(){
 			console.log("CLICKED!!!");
 		});
-		btn.pwdRes.addEventListener("click", function(){
+		/*btn.pwdRes.addEventListener("click", function(){
 			console.log("CLICKED!!!");
-		});
+		});*/
 		btn.compl.addEventListener("click", function(){
 			completeInfoValidation();
+		});
+		btn.clearTick.addEventListener("click", function(){
+			app.removeTicket(currentTicket.uid);
 		});
 	};
 
@@ -195,10 +201,17 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		}
 	};
 
+	function setClearListener(ticket){
+		if(ticket !== undefined){
+			currentTicket = ticket;
+		}
+	};
+
 	return {
 		init,
 		addQueueListener,
-		removeQueueListener
+		removeQueueListener,
+		setClearListener
 	};
 
 })( window, document, radio, jQuery );

@@ -129,6 +129,21 @@ footer div{
 	background-color: #FAF8F4;
 }
 
+.view {
+	display: none;
+}
+
+.view.active {
+	display: block;
+}
+
+.module {
+	display: none;
+}
+.module.active {
+	display: block;
+}
+
 /*////////////*/
 /* ANIMATIONS */
 /*////////////*/

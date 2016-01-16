@@ -14,9 +14,13 @@
 	<body>
 
 
-		<!--TODO list the current queue -->
-		<!--TODO list active teachers -->
-		<!--TODO display status of lab -->
+		<div class="container-fluid">
+			<ul id="container-queue">
+
+			</ul>
+		</div>
+
+
 
 
 
@@ -31,7 +35,7 @@
 
 		<script type="text/javascript">
 			document.addEventListener('DOMContentLoaded', function(){
-
+				screen.init("https://mah-q.firebaseio.com/");
 			});
 		</script>
 	</body>

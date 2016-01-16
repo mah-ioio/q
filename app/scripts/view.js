@@ -8,7 +8,7 @@ qView returns a object called view. When the dom is loaded the main script runs 
 
 var view = (function( win, doc, radio, $, undefined ) {
 
-	var pg = {}, nav = {}, $modals, $alerts;
+	var pg = {}, nav = {}, modul = {}, view = {}, $modals, $alerts;
 
 	var user = {};
 
@@ -29,6 +29,14 @@ var view = (function( win, doc, radio, $, undefined ) {
 			main: 		doc.getElementById("nav-main"),
 			app: 			doc.getElementById("nav-app"),
 			conf: 		doc.getElementById("nav-settings")
+		};
+		modul = {
+			tkTicket:	doc.getElementById("module-take-ticket"),
+			rmTicket:	doc.getElementById("module-remove-ticket")
+		};
+		view = {
+			limited:	doc.getElementById("limited-view"),
+			full:			doc.getElementById("full-view")
 		};
 		$modals = 	$(".modal");
 		$alerts = 	$("#container-alerts");
@@ -115,6 +123,7 @@ var view = (function( win, doc, radio, $, undefined ) {
 
 	//TODO queue templates
 	function updateQueue(queue){
+		console.log(queue);
 		$queue.empty();
 		ctrl.removeQueueListener("all");
 
@@ -123,8 +132,10 @@ var view = (function( win, doc, radio, $, undefined ) {
 		var userNo = 0;
 		var estimation = 0;
 
+		var userReached = false;
+
 		for(var i = 0; i < queue.length; i++){
-			console.log(queue[i]);
+			//console.log(queue[i]);
 			var no = i+1;
 			var name = '<div class="col-xs-9">' + no + " " + queue[i].user.info.first_name +" "+ queue[i].user.info.last_name + '</div>';
 			var backgroundClass = "";
@@ -133,12 +144,13 @@ var view = (function( win, doc, radio, $, undefined ) {
 				userInQueue = true;
 				userObj = queue[i];
 				userNo = no;
+				userReached = true;
 			}
 
-			if(queue[i].ticket.est != undefined){
+			if(!userReached && queue[i].ticket.est != undefined){
 				estimation += queue[i].ticket.est;
 			}
-			console.log(queue[i].ticket.est);
+			//console.log(queue[i].ticket.est);
 
 
 			switch (user.account){
@@ -160,13 +172,21 @@ var view = (function( win, doc, radio, $, undefined ) {
 		}
 		if(userInQueue){
 			updateTicket(userObj,userNo,estimation);
+			modul.rmTicket.classList.add("active");
+			modul.tkTicket.classList.remove("active");
 		} else {
+			modul.tkTicket.classList.add("active");
+			modul.rmTicket.classList.remove("active");
 			updateTicket({
 				ticket:{
 					ticket_id: 0
 				}
 			},0,0)
 		}
+
+		updateCurrent(queue[0]);
+		ctrl.setClearListener(queue[0]);
+
 	};
 
 	function displayModal(query){
@@ -183,22 +203,42 @@ var view = (function( win, doc, radio, $, undefined ) {
 		user = data;
 		user.uid = uid;
 		doc.getElementById("dropdown-user").innerHTML = data.info.first_name + " " + data.info.last_name;
+		if(user.account === "FULL"){
+			view.limited.classList.remove("active");
+			view.full.classList.add("active");
+		} else {
+			view.full.classList.remove("active");
+			view.limited.classList.add("active");
+		}
 	};
 
-	//TODO implement number in queue, tags, and estimation of time
 	function updateTicket(obj, place, est){
 		if(obj.ticket.ticket_id > 0){
-			doc.getElementById("queue-header").innerHTML = "Your are in the queue";
+			doc.getElementById("queue-header").innerHTML = "Your ticket:";
 			doc.getElementById("queue-number").innerHTML = place;
 			doc.getElementById("queue-est").innerHTML = est;
 			doc.getElementById("queue-location").innerHTML = obj.ticket.location;
-			doc.getElementById("queue-tags").innerHTML = obj.ticket.tags;
+			//doc.getElementById("queue-tags").innerHTML = obj.ticket.tags;
 		} else {
-			doc.getElementById("queue-header").innerHTML = "Your are not in the queue";
+			doc.getElementById("queue-header").innerHTML = "Take a ticket";
 			doc.getElementById("queue-number").innerHTML = "";
 			doc.getElementById("queue-est").innerHTML = "";
 			doc.getElementById("queue-location").innerHTML = "";
-			doc.getElementById("queue-tags").innerHTML = "";
+			//doc.getElementById("queue-tags").innerHTML = "";
+		}
+	};
+
+	function updateCurrent(obj){
+		if(obj !== undefined){
+			doc.getElementById("ticket-queue-header").innerHTML = "Next ticket:";
+			doc.getElementById("ticket-queue-name").innerHTML = obj.user.info.first_name+" "+obj.user.info.last_name;
+			doc.getElementById("ticket-queue-est").innerHTML = obj.ticket.est;
+			doc.getElementById("ticket-queue-location").innerHTML = obj.ticket.location;
+		} else {
+			doc.getElementById("ticket-queue-header").innerHTML = "No ticket left";
+			doc.getElementById("ticket-queue-name").innerHTML = "";
+			doc.getElementById("ticket-queue-est").innerHTML = "";
+			doc.getElementById("ticket-queue-location").innerHTML = "";
 		}
 	};
 

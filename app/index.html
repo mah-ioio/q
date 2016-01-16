@@ -88,6 +88,8 @@
 									</div>
 								</div>
 								<div class="form-group form-inline">
+									<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+									<!--
 									<div class="row">
 										<div class="col-xs-6">
 											<div class="checkbox">
@@ -100,13 +102,14 @@
 											<button id="login-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
 										</div>
 									</div>
+									-->
 								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
 		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 		          <p>No account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal">Sign Up!</a></p>
-		          <p>Forgot <a id="reset-password-button" href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal">Password?</a></p>
+		          <!--<p>Forgot <a id="reset-password-button" href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal">Password?</a></p>-->
 		        </div>
 					</div>
 				</div>
@@ -192,7 +195,7 @@
 						</div>
 						<div class="modal-body">
 							<form id="form-ticket">
-								<div class="form-group">
+								<!--<div class="form-group">
 									<div class="btn-group" data-toggle="buttons">
 										<label id="workshop-machines" class="btn btn-primary">
 									    <input type="checkbox" autocomplete="off">M
@@ -213,14 +216,14 @@
 									    <input type="checkbox" autocomplete="off">?
 									  </label>
 									</div>
-								</div>
+								</div>-->
 								<div class="form-group">
 									<select id="ticket-location"class="form-control">
 									  <option>Designstudion</option>
 									  <option>Utställningataljen</option>
 									  <option>Mixstudion</option>
 									  <option>Workshop</option>
-									  <option>Atalje</option>
+									  <option>Våtrumsataljen</option>
 										<option>Lackrummet</option>
 									</select>
 								</div>
@@ -254,7 +257,9 @@
 							<h4 class="modal-title">Remove ticket?</h4>
 						</div>
 						<div class="modal-body">
-							<p>You will lose your place in the queue.</p>
+							<br>
+							<p class="text-center">You will lose your place in the queue.</p>
+							<br>
 							<form id="form-remove">
 								<div class="form-group">
 									<button id="remove-ticket-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
@@ -338,7 +343,7 @@
 										<li><input id="multicard-button" type="button" class="btn btn-link" value="connect multicard" disabled/></li>
 										<li role="separator" class="divider"></li>
 										<li><a id="bug-button"href="#">Found a bug?</a></li>
-										<li><a id="about-button"href="#"><span class="glyphicon glyphicon-info-sign"></span> about</a></li>
+										<!--<li><a id="about-button"href="#"><span class="glyphicon glyphicon-info-sign"></span> about</a></li>-->
 								    <li><a id="logout-button" href="#"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
 									  </ul>
 								</li>
@@ -370,43 +375,76 @@
 
 			<!-- APP VIEW -->
 			<div id="page-app" class="page">
-				<div class="well">
+				<div class="well well-sm">
 
-					<!-- TODO Display current ticket -->
-					<div id="module-current-ticket" class="text-center">
-						<h3 id="queue-header">You are currently not in queue</h3>
-						<p>place: <span id="queue-number"></span></p>
-						<p>est: <span id="queue-est"></span></p>
-						<p>Where: <span id="queue-location"></span></p>
-						<p>About: <span id="queue-tags"></span></p>
+					<div id="limited-view" class="view active">
+						<!-- TODO Display current ticket -->
+						<div id="module-current-ticket" class="text-center">
+							<h3 id="queue-header">Take a ticket</h3>
+							<span id="queue-number"></span><br>
+							<span id="queue-est"></span><br>
+							<span id="queue-location"></span><br><br>
+							<!--<p>About: <span id="queue-tags"></span></p>-->
+						</div>
+
+						<!-- FIXME Take ticket -->
+						<div id="module-take-ticket" class="module active">
+							<form>
+								<div class="form-group">
+									<button type="button" class="btn btn-primary btn-block center-block btn-lg" data-toggle="modal" data-target="#q-get-ticket-modal">Take ticket</button>
+								</div>
+							</form>
+						</div>
+
+						<!-- FIXME Remove ticket -->
+						<div id="module-remove-ticket" class="module">
+							<form>
+								<div class="form-group">
+									<button type="button" class="btn btn-warning btn-block center-block btn-lg" data-toggle="modal" data-target="#q-remove-ticket-modal">Remove ticket</button>
+								</div>
+							</form>
+						</div>
 					</div>
 
-					<!-- FIXME Take ticket -->
-					<div id="module-take-ticket" class="module">
-						<form>
-							<div class="form-group">
-								<button type="button" class="btn btn-primary btn-block center-block btn-lg" data-toggle="modal" data-target="#q-get-ticket-modal">Need help?</button>
-							</div>
-						</form>
+					<div id="full-view" class="view">
+
+						<div id="module-next-ticket" class="text-center">
+							<h3 id="ticket-queue-header"></h3>
+							<span id="ticket-queue-name"></span><br>
+							<span id="ticket-queue-est"></span><br>
+							<span id="ticket-queue-location"></span><br><br>
+							<!--<p>About: <span id="queue-tags"></span></p>-->
+						</div>
+
+						<div id="module-clear-ticket" class="module active">
+							<form>
+								<div class="form-group">
+									<button id="clear-ticket-button" type="button" class="btn btn-primary btn-block center-block btn-lg">Clear this ticket</button>
+								</div>
+							</form>
+						</div>
+
+						<!--
+						<div id="module-push-ticket" class="module active">
+							<form>
+								<div class="form-group">
+									<button type="button" class="btn btn-warning btn-block center-block btn-lg">Push down ticket</button>
+								</div>
+							</form>
+						</div>
+						-->
 					</div>
 
-					<!-- FIXME Remove ticket -->
-					<div id="module-remove-ticket" class="module">
-						<form>
-							<div class="form-group">
-								<button type="button" class="btn btn-warning btn-block center-block btn-lg" data-toggle="modal" data-target="#q-remove-ticket-modal">Step out</button>
-							</div>
-						</form>
-					</div>
-
+					<br>
 					<!-- FIXME help others -->
-					<div id="module-help-ticket" class="module">
+					<div id="module-help-ticket" class="module active">
 						<form>
 							<div class="form-group">
-								<button id="help-others-button" type="button" class="btn btn-block center-block btn-lg btn-success" data-toggle="modal" data-target="#q-queue-modal">Help others</button>
+								<button id="help-others-button" type="button" class="btn btn-block center-block btn-md btn-success" data-toggle="modal" data-target="#q-queue-modal">Queue</button>
 							</div>
 						</form>
 					</div>
+
 
 				</div>
 			</div><!-- end app view -->
