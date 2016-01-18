@@ -4,8 +4,10 @@
 		<meta charset="utf-8">
 		<title>Q app</title>
 		<meta name="viewport" content="initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no"/>
-		<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
-		<link rel="stylesheet" href="../bower_components/animate.css/animate.css">
+
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
+
 		<link rel="stylesheet" href="styles/style.css" media="screen" title="no title" charset="utf-8">
 
 		<!-- index.html is used by all clients in their smart-phone. Signup, login and all 'limited' account client functions exposed such as taking a ticket, seeing info about ticket and queue, changing client data such as name, mail and password etc. -->
@@ -13,7 +15,6 @@
 	</head>
 	<body>
 
-		<!-- TODO Found a bug? modal -->
 		<!-- TODO About us! modal -->
 
 		<!-- MODALS CONTAINER -->
@@ -186,7 +187,7 @@
 
 			<!-- FIXME Ticket modal -->
 			<!-- TICKET MODAL -->
-			<div id="q-get-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+			<div id="q-get-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="get-ticket-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -249,7 +250,7 @@
 			</div>
 
 			<!-- REMOVE TICKET MODAL -->
-			<div id="q-remove-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+			<div id="q-remove-ticket-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remove-ticket-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -272,7 +273,7 @@
 
 			<!-- FIXME Queue modal -->
 			<!-- QUEUE MODAL -->
-			<div id="q-queue-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+			<div id="q-queue-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="queue-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -300,6 +301,27 @@
 								</ul>
 							</div>
 							-->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="q-bug-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Give us feedback!</h4>
+						</div>
+						<div class="modal-body">
+							<form id="form-bug">
+								<div class="form-group">
+									<textarea id="bug-msg" class="form-control" rows="4" placeholder="Write your message here."></textarea>
+								</div>
+								<div class="form-group">
+									<button id="bug-button" type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span></button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -344,9 +366,9 @@
 								    <li><a id="settings-button" href="#">Settings</a></li>
 										<li><input id="multicard-button" type="button" class="btn btn-link" value="connect multicard" disabled/></li>
 										<li role="separator" class="divider"></li>
-										<li><a id="bug-button"href="#">Found a bug?</a></li>
+										<li><a id="get-bug-modal" href="#" data-toggle="modal" data-target="#q-bug-modal">Send us feedback!</a></li>
 										<!--<li><a id="about-button"href="#"><span class="glyphicon glyphicon-info-sign"></span> about</a></li>-->
-								    <li><a id="logout-button" href="#"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+								    <li><a id="logout-button" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 									  </ul>
 								</li>
 
@@ -415,6 +437,7 @@
 						<div id="module-next-ticket" class="text-center">
 							<h3 id="ticket-queue-header"></h3>
 							<span id="ticket-queue-name"></span><br>
+							<span id="ticket-queue-studies"></span><br>
 							<span id="ticket-queue-est"></span><br>
 							<span id="ticket-queue-location"></span><br><br>
 							<!--<p>About: <span id="queue-tags"></span></p>-->
@@ -461,7 +484,7 @@
 					  <h1>Settings</h1>
 					</div>
 					<p>This page will have all settings on it and a save/discard button at the bottom of the page. A nav item navigate the user back to the app page without saving unsaved changes.</p>
-					<p>User will be able to change all information, change password and email, in the future connect/change multicard etc. They are also able to completly delete their entire profile. Refrences to thier uid will persist but this will only refrence an unknown user.</p>
+					<p>User will be able to change all information, change password and email, in the future connect/change multicard etc.</p>
 					<br>
 				</div>
 			</div><!-- end settings view -->
@@ -481,11 +504,10 @@
 		</div>
 
 
-		<!--FIXME Remove jQuery dependency by switching bootstrap for 'bootstrap nativ' -->
-		<script src="../bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
-		<script src="../bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
-		<script src="../bower_components/firebase/firebase.js" charset="utf-8"></script>
-		<script src="../bower_components/radio/radio.js" charset="utf-8"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+		<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/radio/0.2.0/radio.min.js"></script>
 
 		<script src="scripts/app.js" charset="utf-8"></script>
 		<script src="scripts/view.js" charset="utf-8"></script>

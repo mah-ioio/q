@@ -106,6 +106,40 @@ footer div{
 	color: #f5f5f5;
 }
 
+#queue-number{
+	font-size: 24pt;
+	font-weight: bold;
+}
+#queue-est{
+	font-size: 16pt;
+}
+#queue-location{
+	font-size: 14pt;
+	font-style: italic;
+	color: grey;
+}
+
+#ticket-queue-name{
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+#ticket-queue-studies{
+	font-size: 18pt;
+	color: grey;
+}
+
+#ticket-queue-est{
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+#ticket-queue-location{
+	font-size: 14pt;
+	font-style: italic;
+	color: grey;
+}
+
 /*///////////////////*/
 /* FUNCTION STYLINGS */
 /*///////////////////*/

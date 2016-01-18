@@ -35,7 +35,8 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			signup:		doc.getElementById("form-signup"),
 			login:		doc.getElementById("form-login"),
 			ticket:		doc.getElementById("form-ticket"),
-			compl: 		doc.getElementById("form-complete")
+			compl: 		doc.getElementById("form-complete"),
+			bug:			doc.getElementById("form-bug")
 		};
 	};
 
@@ -146,6 +147,12 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 
 	};
 
+	function bugValidation(){
+		app.reportBug(form.bug[0].value);
+		view.hideModals();
+		$('#bug-msg').val("");
+	};
+
 	function setListeners(){
 		btn.signup.addEventListener("click", function(){
 			signupValidation();
@@ -173,7 +180,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			console.log("CLICKED!!!");
 		});*/
 		btn.bug.addEventListener("click", function(){
-			console.log("CLICKED!!!");
+			bugValidation();
 		});
 		/*btn.pwdRes.addEventListener("click", function(){
 			console.log("CLICKED!!!");
@@ -195,11 +202,11 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			id: id,
 			uid: uid
 		});
-		console.log(queueListeners);
 		target.addEventListener("click", function(){queueCallback(uid)});
 	};
 
 	function queueCallback(uid){
+		app.removeTicket(uid);
 		console.log("userid = "+uid);
 	};
 

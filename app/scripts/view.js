@@ -216,8 +216,8 @@ var view = (function( win, doc, radio, $, undefined ) {
 		if(obj.ticket.ticket_id > 0){
 			doc.getElementById("queue-header").innerHTML = "Your ticket:";
 			doc.getElementById("queue-number").innerHTML = place;
-			doc.getElementById("queue-est").innerHTML = est;
-			doc.getElementById("queue-location").innerHTML = obj.ticket.location;
+			doc.getElementById("queue-est").innerHTML = "eta: "+est+"min";
+			doc.getElementById("queue-location").innerHTML = "@ "+obj.ticket.location;
 			//doc.getElementById("queue-tags").innerHTML = obj.ticket.tags;
 		} else {
 			doc.getElementById("queue-header").innerHTML = "Take a ticket";
@@ -232,8 +232,9 @@ var view = (function( win, doc, radio, $, undefined ) {
 		if(obj !== undefined){
 			doc.getElementById("ticket-queue-header").innerHTML = "Next ticket:";
 			doc.getElementById("ticket-queue-name").innerHTML = obj.user.info.first_name+" "+obj.user.info.last_name;
-			doc.getElementById("ticket-queue-est").innerHTML = obj.ticket.est;
-			doc.getElementById("ticket-queue-location").innerHTML = obj.ticket.location;
+			doc.getElementById("ticket-queue-studies").innerHTML = obj.user.info.studies;
+			doc.getElementById("ticket-queue-est").innerHTML = "est: "+obj.ticket.est+"min";
+			doc.getElementById("ticket-queue-location").innerHTML = "@ "+obj.ticket.location;
 		} else {
 			doc.getElementById("ticket-queue-header").innerHTML = "No ticket left";
 			doc.getElementById("ticket-queue-name").innerHTML = "";

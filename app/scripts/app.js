@@ -9,7 +9,6 @@ Instead of calling page change when the login method runs, a auth listener (root
 	TODO Method for change password
 	TODO Method for reset password
 	TODO Method for change mail
-	FIXME changes to tickets currently create two callbacks, why?
 */
 
 var app = (function( radio, Firebase, undefined){
@@ -31,12 +30,12 @@ var app = (function( radio, Firebase, undefined){
 	function setRefs(root){
 		ref.users = root.child("users");
 		ref.tickets = root.child("tickets");
+		ref.bugs = root.child("bugs");
 	};
 
 	function setUserRefs(uid){
 		ref.user = ref.users.child(uid);
 		ref.ticket = ref.tickets.child(uid);
-		ref.log = root.child("logs/"+uid);
 	};
 
 	function setAuthListener(){
@@ -218,15 +217,12 @@ var app = (function( radio, Firebase, undefined){
 		}
 	};
 
-	/*
-	function logEvent(uid, type){
-		ref.log.push({
+	function reportBug(msg){
+		ref.bugs.push({
 			time: Firebase.ServerValue.TIMESTAMP,
-			set_by: uid,
-			event_type: type
+			msg: msg
 		});
 	};
-	*/
 
 	return {
 		init,
@@ -235,7 +231,8 @@ var app = (function( radio, Firebase, undefined){
 		logout,
 		updateUserData,
 		takeTicket,
-		removeTicket
+		removeTicket,
+		reportBug
 	};
 
 })( radio, Firebase );
