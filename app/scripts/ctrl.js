@@ -100,6 +100,11 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		};
 
 		var locationData = form.ticket[0].value;
+		console.log(form.ticket[1].value);
+		console.log(form.ticket[2].value);
+		console.log($('#10min').is(":checked"));
+		
+		/*
 		ticketData.location = locationData;
 
 		var formData = form.ticket.getElementsByClassName("active");
@@ -126,7 +131,8 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 				default:
 					break;
 			}
-		};
+
+		};*/
 
 		//TODO check if atleast one tag is clicked, if not alert user
 
