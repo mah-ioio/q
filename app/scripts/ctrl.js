@@ -99,7 +99,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			pull: 0
 		};
 
-		var locationData = form.ticket[0].value;
+		ticketData.location = form.ticket[0].value;
 		/*
 		console.log(form.ticket[1].value);
 		console.log(form.ticket[2].value);
@@ -110,7 +110,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		}
 
 		/*
-		ticketData.location = locationData;
+
 
 		var formData = form.ticket.getElementsByClassName("active");
 		for(item in formData){
