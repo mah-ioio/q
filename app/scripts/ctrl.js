@@ -100,10 +100,15 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		};
 
 		var locationData = form.ticket[0].value;
+		/*
 		console.log(form.ticket[1].value);
 		console.log(form.ticket[2].value);
 		console.log($('#10min').is(":checked"));
-		
+		*/
+		if($('#10min').is(":checked")){
+			ticketData.est = 10;
+		}
+
 		/*
 		ticketData.location = locationData;
 
