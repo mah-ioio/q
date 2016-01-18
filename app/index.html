@@ -330,7 +330,7 @@
 						<ul id="nav-main" class="nav pull-right">
 								<li><a href="#signup" data-toggle="modal" data-target="#q-signup-modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 								<li><a href="#login" data-toggle="modal" data-target="#q-login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-								
+
 						</ul>
 
 						<ul id="nav-app" class="nav pull-right">
@@ -349,7 +349,7 @@
 								    <li><a id="logout-button" href="#"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
 									  </ul>
 								</li>
-								
+
 						</ul>
 
 						<ul id="nav-settings" class="nav pull-right">
@@ -492,6 +492,12 @@
 		<script src="scripts/ctrl.js" charset="utf-8"></script>
 
 		<script type="text/javascript">
+			$( document ).ready(function() {
+				ctrl.init();
+				view.init();
+				app.init("https://mah-q.firebaseio.com");
+			});
+			/*
 			document.addEventListener('DOMContentLoaded', function(){
 				//timeout only there to see loading screen, remove before deploying
 				setTimeout(function(){
@@ -500,6 +506,7 @@
 					app.init("https://mah-q.firebaseio.com");
 				}, 1000);
 			});
+			*/
 		</script>
 
 	</body>
