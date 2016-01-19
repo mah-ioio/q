@@ -170,7 +170,7 @@ var app = (function( radio, Firebase, undefined){
 				radio("ALERT").broadcast(error,"alert-danger");
 			}
 		},{
-			rememberMe
+			remember: rememberMe
 		});
 	};
 
