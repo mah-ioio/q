@@ -226,10 +226,10 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	};
 
 	return {
-		init,
-		addQueueListener,
-		removeQueueListener,
-		setClearListener
+		init: init,
+		addQueueListener: addQueueListener,
+		removeQueueListener: removeQueueListener,
+		setClearListener: setClearListener
 	};
 
 })( window, document, radio, jQuery );

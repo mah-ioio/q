@@ -135,8 +135,8 @@ var app = (function( radio, Firebase, undefined){
 
 	function signup(email,password){
 		root.createUser({
-			email,
-			password
+			email: email,
+			password: password
 		}, function(error, userData) {
 			if (error) {
 				switch (error.code) {
@@ -163,8 +163,8 @@ var app = (function( radio, Firebase, undefined){
 		var rememberMe = "default";
 
 		root.authWithPassword({
-			email,
-			password
+			email: email,
+			password: password
 		}, function(error, authData) {
 			if (error) {
 				radio("ALERT").broadcast(error,"alert-danger");
@@ -225,14 +225,14 @@ var app = (function( radio, Firebase, undefined){
 	};
 
 	return {
-		init,
-		signup,
-		login,
-		logout,
-		updateUserData,
-		takeTicket,
-		removeTicket,
-		reportBug
+		init: init,
+		signup: signup,
+		login: login,
+		logout: logout,
+		updateUserData: updateUserData,
+		takeTicket: takeTicket,
+		removeTicket: removeTicket,
+		reportBug: reportBug
 	};
 
 })( radio, Firebase );

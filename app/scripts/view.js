@@ -283,8 +283,8 @@ var view = (function( win, doc, radio, $, undefined ) {
 	};
 
 	return {
-		init,
-		hideModals
+		init: init,
+		hideModals: hideModals
 	};
 
 })( window, document, radio, jQuery );
