@@ -17,9 +17,8 @@ strong {
 .list-group-item h2 {
 	text-align: center;
 }
- li{
 
-		
+ li{
 }
 li:first-child {
 	margin-left: 4%;
@@ -39,6 +38,39 @@ margin:auto;
 margin:auto;
     width: 100%;
 }
+
+	.queue-over-five{
+		font-size: 0.5em;
+		font-weight: 400;
+		letter-spacing: 4px;
+		margin: 0 ;
+		line-height: 0.5em;		
+	}
+		.queue-over-five h2{
+			margin: 0 ;
+		}
+		.queue-over-five li{
+		}
+		.queue-over-five li:first-child {	
+			background-color: #fff;
+			color: #333;
+		}
+
+.list-group-total{
+margin: 0 0 0 0;
+z-index: 2000;
+	position: fixed;
+	bottom: 40px;
+	right: 0;
+	width: 160px;
+	height: 140px;
+	background-color: #f5f5f5;
+}
+.list-group-total strong {
+font-size: 4.65em;
+    margin-left: 60px;
+}
+
 /*///////////////*/
 /* MEDIA QUERIES */
 /*///////////////*/

@@ -59,12 +59,18 @@ var screen = (function(win, doc, Firebase, undefined){
 	function drawQueue(){
 		$queue.empty();
 		for(var i = 0; i < queue.length; i++){
+			
 			var no = i+1;
 			var name = '<table><tr><td rowspan="2"><strong>'+ no + '</strong></td><td class="list-group-center"><h2>' + queue[i].user.info.first_name +" "+ queue[i].user.info.last_name+'<h2></td></tr>';
 			var est = queue[i].ticket.est + "";
 			var location = queue[i].ticket.location + "";
-			$queue.append('<li class="list-group-item">' + name +" "+'<tr><td class="list-group-center"><h2><span>'+est+"min @ <em>"+location+'</em></span><h2></td></tr></table></li>');
+			if (i<=4){
+						$queue.append('<li class="list-group-item">' + name +" "+'<tr><td class="list-group-center"><h2><span>'+est+"min @ <em>"+location+'</em></span><h2></td></tr></table></li>');
+			}else {
+						$queue.append('<div class="queue-over-five"><li class="list-group-item">' + name +" "+'<tr><td class="list-group-center"><h2><span>'+est+"min @ <em>"+location+'</em></span><h2></td></tr></table></li></div>');
+			}
 		}
+		$queue.append('<div class="list-group-total"><h2>&nbsp In Queue:</h2><strong>' +queue.length+'</strong></div>');
 	};
 
 	return {
