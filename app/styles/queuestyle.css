@@ -71,6 +71,12 @@ font-size: 4.65em;
     margin-left: 60px;
 }
 
+#clock{
+	position: absolute;
+    right: 10px;
+    text-align: right;
+}
+
 /*///////////////*/
 /* MEDIA QUERIES */
 /*///////////////*/
