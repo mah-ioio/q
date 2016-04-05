@@ -63,13 +63,20 @@ z-index: 2000;
 	bottom: 40px;
 	right: 0;
 	width: 160px;
-	height: 140px;
+	height:200px;
 	background-color: #f5f5f5;
 }
 .list-group-total strong {
 font-size: 4.65em;
     margin-left: 60px;
 }
+
+	#queueOff h2{
+	    font-size: 3.5em;
+    font-weight: 500;
+    letter-spacing: 3px;
+    padding-top: 5em;
+	}
 
 /*///////////////*/
 /* MEDIA QUERIES */

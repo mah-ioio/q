@@ -1,8 +1,7 @@
-
-
 var screen = (function(win, doc, Firebase, undefined){
 
 	var root;
+	var qOn;
 	var ref = {};
 
 	var queue = [];
@@ -14,7 +13,10 @@ var screen = (function(win, doc, Firebase, undefined){
 		root = new Firebase(url);
 		ref.users = root.child("users");
 		ref.tickets = root.child("tickets");
+		ref.app = root.child("app/running");
+		
 		setAppListeners();
+		
 		setQueueListener();
 	};
 
@@ -22,7 +24,16 @@ var screen = (function(win, doc, Firebase, undefined){
 		ref.users.on("value", function(usersSnapshot){
 			users = usersSnapshot.val();
 		});
+		
+	 	ref.app.on("value", function(app) {
+			qOn = app.val();
+			console.log ( 'running' );
+			drawQueue(queue);
+		});
+			
+
 	};
+	
 
 	function setQueueListener(){
 		ref.tickets.on("value", function(tickets){
@@ -58,8 +69,10 @@ var screen = (function(win, doc, Firebase, undefined){
 
 	function drawQueue(){
 		$queue.empty();
+			
+		if (qOn){
 		for(var i = 0; i < queue.length; i++){
-
+		
 			var no = i+1;
 			var name = '<table><tr><td rowspan="2"><strong>'+ no + '</strong></td><td class="list-group-center"><h2>' + queue[i].user.info.first_name +" "+ queue[i].user.info.last_name+", "+ queue[i].user.info.studies+'<h2></td></tr>';
 			var est = queue[i].ticket.est + "";
@@ -70,7 +83,11 @@ var screen = (function(win, doc, Firebase, undefined){
 						$queue.append('<div class="queue-over-five"><li class="list-group-item">' + name +" "+'<tr><td class="list-group-center"><h2><span>'+est+"min @ <em>"+location+'</em></span><h2></td></tr></table></li></div>');
 			}
 		}
-		$queue.append('<div class="list-group-total"><h2>&nbsp In Queue:</h2><strong>' +queue.length+'</strong></div>');
+		$queue.append('<div class="list-group-total"><h2>&nbsp In Queue:</h2><strong>' +no+'</strong></div>');
+		
+		}else{
+		$queue.append('<li class="list-group-item" ><div id="queueOff"><h2>The queue is not activated <br> Please take any questions to the teachers <h2></div></li>');
+		}
 	};
 
 	return {
@@ -78,3 +95,5 @@ var screen = (function(win, doc, Firebase, undefined){
 	}
 
 })(window, document, Firebase);
+
+
