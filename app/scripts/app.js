@@ -178,6 +178,70 @@ var app = (function( radio, Firebase, undefined){
 		root.unauth();
 	};
 
+	function resetPassword(userMail){
+		root.resetPassword({
+		  email: userMail
+		}, function(error) {
+		  if (error) {
+		    switch (error.code) {
+		      case "INVALID_USER":
+		        console.log("The specified user account does not exist.");
+		        break;
+		      default:
+		        console.log("Error resetting password:", error);
+		    }
+		  } else {
+		    console.log("Password reset email sent successfully!");
+		  }
+		});
+	};
+
+	function changePassword(mail, currentPwd, newPwd){
+		root.changePassword({
+		  email: mail,
+		  oldPassword: currentPwd,
+		  newPassword: newPwd
+		}, function(error) {
+		  if (error) {
+		    switch (error.code) {
+		      case "INVALID_PASSWORD":
+		        console.log("The specified user account password is incorrect.");
+		        break;
+		      case "INVALID_USER":
+		        console.log("The specified user account does not exist.");
+		        break;
+		      default:
+		        console.log("Error changing password:", error);
+		    }
+		  } else {
+		    console.log("User password changed successfully!");
+		  }
+		});
+	};
+
+	function changeEmail(currentMail, newMail, pwd){
+		root.changeEmail({
+		  oldEmail: currentMail,
+		  newEmail: newMail,
+		  password: pwd
+		}, function(error) {
+		  if (error) {
+		    switch (error.code) {
+		      case "INVALID_PASSWORD":
+		        console.log("The specified user account password is incorrect.");
+		        break;
+		      case "INVALID_USER":
+		        console.log("The specified user account does not exist.");
+		        break;
+		      default:
+		        console.log("Error changing email:", error);
+		    }
+		  } else {
+		    console.log("User email changed successfully!");
+		  }
+		});
+	};
+
 	function setUserData(){
 		ref.user.update({
 			account: "LIMITED",
@@ -229,10 +293,13 @@ var app = (function( radio, Firebase, undefined){
 		signup: signup,
 		login: login,
 		logout: logout,
+		resetPassword: resetPassword,
 		updateUserData: updateUserData,
 		takeTicket: takeTicket,
 		removeTicket: removeTicket,
-		reportBug: reportBug
+		reportBug: reportBug,
+		changeEmail: changeEmail,
+		changePassword: changePassword
 	};
 
 })( radio, Firebase );

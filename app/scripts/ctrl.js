@@ -9,6 +9,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	var btn = {}, form = {}, modals = [], queueListeners = [];
 
 	var currentTicket;
+	var user = {};
 
 	function init(){
 		cacheDom();
@@ -27,16 +28,23 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			confB:		doc.getElementById("back-button"),
 			//about:		doc.getElementById("about-button"),
 			bug:			doc.getElementById("bug-button"),
-			//pwdRes:		doc.getElementById("reset-password-button"),
+			pwdRes:		doc.getElementById("password-reset-accept-button"),
 			compl:		doc.getElementById("complete-info-button"),
-			clearTick:doc.getElementById("clear-ticket-button")
+			clearTick:doc.getElementById("clear-ticket-button"),
+			cInfo:		doc.getElementById("confirm-change-info-button"),
+			cEmail:		doc.getElementById("confirm-change-email-button"),
+			cPwd:			doc.getElementById("confirm-change-password-button")
 		};
 		form = {
 			signup:		doc.getElementById("form-signup"),
 			login:		doc.getElementById("form-login"),
+			reset:		doc.getElementById("form-reset"),
 			ticket:		doc.getElementById("form-ticket"),
 			compl: 		doc.getElementById("form-complete"),
-			bug:			doc.getElementById("form-bug")
+			bug:			doc.getElementById("form-bug"),
+			cInfo:		doc.getElementById("form-info-change"),
+			cEmail:		doc.getElementById("form-email-change"),
+			cPwd:			doc.getElementById("form-password-change")
 		};
 	};
 
@@ -84,6 +92,40 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		app.updateUserData(data[0],data[1],data[2]);
 	};
 
+	function changeInfoValidation(){
+		var data = [];
+		data[0] = user.info.first_name;
+		if(form.cInfo[0].value != ""){
+			data[0] = form.cInfo[0].value;
+		}
+		data[1] = user.info.last_name;
+		if(form.cInfo[1].value != ""){
+			data[1] = form.cInfo[1].value;
+		}
+		data[2] = user.info.studies;
+		if(form.cInfo[2].value != ""){
+			data[2] = form.cInfo[2].value;
+		}
+
+		app.updateUserData(data[0],data[1],data[2]);
+	};
+
+	function changeEmailValidation(){
+		if(form.cEmail[0].value != "" && form.cEmail[1].value != "" && form.cEmail[2].value != ""){
+			app.changeEmail(form.cEmail[0].value, form.cEmail[1].value, form.cEmail[2].value);
+		} else {
+			radio("ALERT").broadcast("Please fill in all fields.", "alert-warning");
+		}
+	}
+
+	function changePasswordValidation(){
+		if(form.cPwd[0].value != "" && form.cPwd[1].value != "" && form.cPwd[2].value != ""){
+			app.changePassword(form.cPwd[0].value, form.cPwd[1].value, form.cPwd[2].value);
+		} else {
+			radio("ALERT").broadcast("Please fill in all fields.", "alert-warning");
+		}
+	}
+
 	function ticketValidation(){
 		//set default ticket values
 		var ticketData = {
@@ -101,11 +143,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		};
 
 		ticketData.location = form.ticket[0].value;
-		/*
-		console.log(form.ticket[1].value);
-		console.log(form.ticket[2].value);
-		console.log($('#10min').is(":checked"));
-		*/
+
 		if($('#10min').is(":checked")){
 			ticketData.est = 10;
 		}
@@ -150,6 +188,7 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 	function bugValidation(){
 		app.reportBug(form.bug[0].value);
 		view.hideModals();
+		$("#q-report-success-modal").modal("show");
 		$('#bug-msg').val("");
 	};
 
@@ -182,16 +221,31 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		btn.bug.addEventListener("click", function(){
 			bugValidation();
 		});
-		/*btn.pwdRes.addEventListener("click", function(){
-			console.log("CLICKED!!!");
-		});*/
+		btn.pwdRes.addEventListener("click", function(){
+			app.resetPassword(form.reset[0].value);
+		});
 		btn.compl.addEventListener("click", function(){
 			completeInfoValidation();
 		});
 		btn.clearTick.addEventListener("click", function(){
 			app.removeTicket(currentTicket.uid);
 		});
+		btn.cInfo.addEventListener("click", function(){
+			changeInfoValidation();
+		});
+		btn.cEmail.addEventListener("click", function(){
+			changeEmailValidation();
+		});
+		btn.cPwd.addEventListener("click", function(){
+			changePasswordValidation();
+		});
+
+		radio("USER_DATA").subscribe(function(uid,data){
+			user = data;
+		});
+
 	};
+
 
 	function addQueueListener(id, uid){
 		//TODO add new object to queueListeners array for easy removal later

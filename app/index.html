@@ -110,13 +110,41 @@
 						<div class="modal-footer">
 		          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 		          <p>No account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-signup-modal">Sign Up!</a></p>
-		          <!--<p>Forgot <a id="reset-password-button" href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal">Password?</a></p>-->
+		          <p>Forgot <a id="reset-password-button" href="#" data-dismiss="modal" data-toggle="modal" data-target="#q-password-reset-modal">Password?</a></p>
 		        </div>
 					</div>
 				</div>
 			</div>
 
 			<!-- PASSWORD RESET MODAL -->
+			<div id="q-password-reset-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="password-reset-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Reset password</h4>
+						</div>
+						<div class="modal-body">
+							<form id="form-reset">
+								<form class="form-group">
+									<label class="sr-only" for="signup-email">Email address</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+										<input type="email" class="form-control" id="password-reset-mail" placeholder="Email">
+									</div>
+								</form>
+								<br>
+								<form class="form-group">
+									<button id="password-reset-accept-button" data-dismiss="modal" data-toggle="modal" data-target="#q-password-modal" type="button" class="btn btn-primary btn-block">Send new password</button>
+								</form>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- PASSWORD RESET SUCCESS MODAL -->
 			<div id="q-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="password-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
@@ -166,7 +194,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="sr-only" for="complete-studies-name">Last name</label>
+									<label class="sr-only" for="complete-studies-name">Studies</label>
 									<div class="input-group">
 										<div class="input-group-addon"><span class="glyphicon glyphicon-education"></span></div>
 										<input type="text" class="form-control" id="complete-studies-name" placeholder="Program/Course">
@@ -308,7 +336,7 @@
 				</div>
 			</div>
 
-			<div id="q-bug-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ticket-modal">
+			<div id="q-bug-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bug-modal">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -328,6 +356,155 @@
 					</div>
 				</div>
 			</div>
+
+			<div id="q-report-success-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="report-success-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Thank you for your feedback!</h4>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<button id="report-success-button" data-dismiss="modal" type="button" class="btn btn-success btn-block">Done</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- CHANGE INFO MODAL -->
+			<div id="q-info-change-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="email-change-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-user"></span> Change email</h4>
+						</div>
+						<div class="modal-body">
+							<form id="form-info-change">
+								<div class="form-group">
+									<label class="sr-only" for="change-first-name">First name</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+										<input type="text" class="form-control" id="change-first-name" placeholder="First name">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="change-last-name">Last name</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+										<input type="text" class="form-control" id="change-last-name" placeholder="Last name">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="change-studies-name">Studies</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-education"></span></div>
+										<input type="text" class="form-control" id="change-studies-name" placeholder="Program/Course">
+									</div>
+								</div>
+								<div class="form-group">
+									<button id="confirm-change-info-button" type="button" class="btn btn-primary btn-block" data-dismiss="modal">Change info</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer" style="text-align: center;">
+		          <p>If a field is left blank that info will not change</p>
+		        </div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- CHANGE EMAIL MODAL -->
+			<div id="q-email-change-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="email-change-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-envelope"></span> Change email</h4>
+						</div>
+						<div class="modal-body">
+							<form id="form-email-change">
+								<div class="form-group">
+									<label class="sr-only" for="old-change-email">Current email</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+										<input type="text" class="form-control" id="old-change-email" placeholder="Current email">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="new-change-email">New email</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+										<input type="text" class="form-control" id="new-change-email" placeholder="New email">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="current-user-password">Password</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+										<input type="password" class="form-control" id="current-user-password" placeholder="Password">
+									</div>
+								</div>
+								<div class="form-group">
+									<button id="confirm-change-email-button" type="button" class="btn btn-primary btn-block" data-dismiss="modal">Change email</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- CHANGE PASSWORD MODAL -->
+			<div id="q-password-change-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="password-change-modal">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><span class="glyphicon glyphicon-lock"></span> Change password</h4>
+						</div>
+						<div class="modal-body">
+							<form id="form-password-change">
+								<div class="form-group">
+									<label class="sr-only" for="password-change-email">Current email</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+										<input type="text" class="form-control" id="password-change-email" placeholder="User email">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="change-password-current">Current password</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+										<input type="password" class="form-control" id="change-password-current" placeholder="Current password">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="change-password-new">New password</label>
+									<div class="input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+										<input type="password" class="form-control" id="change-password-new" placeholder="New password">
+									</div>
+								</div>
+								<div class="form-group">
+									<button id="confirm-change-password-button" type="button" class="btn btn-primary btn-block" data-dismiss="modal">Change password</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
 
 		</div><!-- end modal container -->
 
@@ -358,8 +535,8 @@
 						</ul>
 
 						<ul id="nav-app" class="nav pull-right">
-								
-								
+
+
 								<li class="dropdown">
 									<a href="#" id="user-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
 									<ul class="dropdown-menu dropdown-menu-right dropdown-menu-nav" aria-labelledby="user-dropdown">
@@ -486,8 +663,22 @@
 					<div class="page-header">
 					  <h1>Settings</h1>
 					</div>
-					<p>This page will have all settings on it and a save/discard button at the bottom of the page. A nav item navigate the user back to the app page without saving unsaved changes.</p>
-					<p>User will be able to change all information, change password and email, in the future connect/change multicard etc.</p>
+					<form>
+						<div class="form-group">
+							<button id="change-info-button" type="button" class="btn btn-block center-block btn-md btn-default" data-toggle="modal" data-target="#q-info-change-modal">Change info</button>
+						</div>
+					</form>
+					<form>
+						<div class="form-group">
+							<button id="change-email-button" type="button" class="btn btn-block center-block btn-md btn-default" data-toggle="modal" data-target="#q-email-change-modal">Change email</button>
+						</div>
+					</form>
+					<form>
+						<div class="form-group">
+							<button id="change-password-button" type="button" class="btn btn-block center-block btn-md btn-default" data-toggle="modal" data-target="#q-password-change-modal">Change password</button>
+						</div>
+					</form>
+
 					<br>
 				</div>
 			</div><!-- end settings view -->
@@ -495,7 +686,7 @@
 			<!-- STICKY FOOTER -->
 			<footer>
 				<div class="container">
-					<p class="text-muted">© 2016 – IOIO/Malmö University - currently in BETA</p>
+					<p class="text-muted">© 2016 – IOIO/Malmö University - in BETA</p>
 				</div>
 			</footer>
 
