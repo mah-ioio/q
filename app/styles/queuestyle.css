@@ -71,12 +71,20 @@ font-size: 4.65em;
     margin-left: 60px;
 }
 
+<<<<<<< HEAD
 	#queueOff h2{
 	    font-size: 3.5em;
     font-weight: 500;
     letter-spacing: 3px;
     padding-top: 5em;
 	}
+=======
+#clock{
+	position: absolute;
+    right: 10px;
+    text-align: right;
+}
+>>>>>>> origin/master
 
 /*///////////////*/
 /* MEDIA QUERIES */

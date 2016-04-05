@@ -2,7 +2,12 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+<<<<<<< HEAD
 		<title>Q</title>
+=======
+
+		<title>Q app</title>
+>>>>>>> origin/master
 		<meta name="viewport" content="initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no"/>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
@@ -11,10 +16,27 @@
 
 
 		<!-- queue.html is the schedlue and queue that is to be displayed on screens around the workshop. Use one dedicated script called screen.js. Firebase root/tickets is set to read=true so anyone can access that data. This means that the screen do not need to be logged in which is convenient. -->
-
+<!--- Clock function -->
+		<script>
+		function startTime() {
+			var today = new Date();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			m = checkTime(m);
+		   
+			document.getElementById('clock').innerHTML =
+			h + ":" + m;
+			var t = setTimeout(startTime, 500);
+		}
+		function checkTime(i) {
+			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			return i;
+		}
+		</script>	
 	</head>
 
-	<body>
+	<body onload="startTime()">
 
 <div class="panel panel-default">
 		<div class="container-fluid">
@@ -31,6 +53,8 @@
 				<div class="container-fluid">
 					<div class="navbar-header pull-left">
 						<a class="navbar-brand brand-text" href="#"><strong>Q</strong><small> by ioio</small></a>
+						
+						<a class="navbar-brand brand-text" href="#"><strong><div id="clock"></div></strong></a>
 					</div>
 				</div>
 			</nav>
