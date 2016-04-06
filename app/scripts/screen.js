@@ -2,6 +2,7 @@ var screen = (function(win, doc, Firebase, undefined){
 
 	var root;
 	var qOn;
+	var no=0;
 	var ref = {};
 
 	var queue = [];
@@ -28,7 +29,7 @@ var screen = (function(win, doc, Firebase, undefined){
 	 	ref.app.on("value", function(app) {
 			qOn = app.val();
 			console.log ( 'running' );
-			drawQueue(queue);
+			setQueueListener()
 		});
 			
 
@@ -73,7 +74,7 @@ var screen = (function(win, doc, Firebase, undefined){
 		if (qOn){
 		for(var i = 0; i < queue.length; i++){
 		
-			var no = i+1;
+			no = i+1;
 			var name = '<table><tr><td rowspan="2"><strong>'+ no + '</strong></td><td class="list-group-center"><h2>' + queue[i].user.info.first_name +" "+ queue[i].user.info.last_name+", "+ queue[i].user.info.studies+'<h2></td></tr>';
 			var est = queue[i].ticket.est + "";
 			var location = queue[i].ticket.location + "";
