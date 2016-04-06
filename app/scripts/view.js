@@ -32,7 +32,8 @@ var view = (function( win, doc, radio, $, undefined ) {
 		};
 		modul = {
 			tkTicket:	doc.getElementById("module-take-ticket"),
-			rmTicket:	doc.getElementById("module-remove-ticket")
+			rmTicket:	doc.getElementById("module-remove-ticket"),
+			onOff:		doc.getElementById("module-turn-onoff")
 		};
 		view = {
 			limited:	doc.getElementById("limited-view"),
@@ -206,8 +207,10 @@ var view = (function( win, doc, radio, $, undefined ) {
 		if(user.account === "FULL"){
 			view.limited.classList.remove("active");
 			view.full.classList.add("active");
+			modul.onOff.classList.add("active");
 		} else {
 			view.full.classList.remove("active");
+			modul.onOff.classList.remove("active");
 			view.limited.classList.add("active");
 		}
 	};

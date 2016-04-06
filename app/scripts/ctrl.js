@@ -33,7 +33,8 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 			clearTick:doc.getElementById("clear-ticket-button"),
 			cInfo:		doc.getElementById("confirm-change-info-button"),
 			cEmail:		doc.getElementById("confirm-change-email-button"),
-			cPwd:			doc.getElementById("confirm-change-password-button")
+			cPwd:			doc.getElementById("confirm-change-password-button"),
+			onOff:		doc.getElementById("turn-onoff-button")
 		};
 		form = {
 			signup:		doc.getElementById("form-signup"),
@@ -178,10 +179,12 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 
 		};*/
 
-		//TODO check if atleast one tag is clicked, if not alert user
-
-		app.takeTicket(ticketData);
-		view.hideModals();
+		if(ticketData.location != ""){
+			app.takeTicket(ticketData);
+			view.hideModals();
+		} else {
+			radio("ALERT").broadcast("Please select location.", "alert-danger");
+		}
 
 	};
 
@@ -238,6 +241,9 @@ var ctrl = (function( win, doc, radio, $, undefined ) {
 		});
 		btn.cPwd.addEventListener("click", function(){
 			changePasswordValidation();
+		});
+		btn.onOff.addEventListener("click", function(){
+			app.toggleOnOff();
 		});
 
 		radio("USER_DATA").subscribe(function(uid,data){

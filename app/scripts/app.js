@@ -4,19 +4,13 @@ The qApp module is in charge of communication with the database and authenticate
 Instead of calling page change when the login method runs, a auth listener (root.onAuth()) is set with a callback that, if auth changes i.e. a user goes from authenticated to not-authenticated, broadcasts this event (LOGGED_IN/LOGGED_OUT) to all modules that subscribe to them. For example qView listens to these events and change to the right view depending on which event it recives.
 **/
 
-/*
-	TODO Write complete data to firebase
-	TODO Method for change password
-	TODO Method for reset password
-	TODO Method for change mail
-*/
-
 var app = (function( radio, Firebase, undefined){
 
 	var root;
 	var ref = {};
 	var uid;
 	var users;
+	var running;
 
 	var userListenersSet = false;
 
@@ -31,6 +25,7 @@ var app = (function( radio, Firebase, undefined){
 		ref.users = root.child("users");
 		ref.tickets = root.child("tickets");
 		ref.bugs = root.child("bugs");
+		ref.app = root.child("app");
 	};
 
 	function setUserRefs(uid){
@@ -57,6 +52,10 @@ var app = (function( radio, Firebase, undefined){
 	function setAppListeners(){
 		ref.users.on("value", function(usersSnapshot){
 			users = usersSnapshot.val();
+		});
+		ref.app.on("value", function(data){
+			running = data.val().running;
+			console.log("running is "+ running);
 		});
 	};
 
@@ -288,6 +287,18 @@ var app = (function( radio, Firebase, undefined){
 		});
 	};
 
+	function toggleOnOff(){
+		if(running){
+			ref.app.update({
+				running: false
+			});
+		} else {
+			ref.app.update({
+				running: true
+			});
+		}
+	};
+
 	return {
 		init: init,
 		signup: signup,
@@ -299,7 +310,8 @@ var app = (function( radio, Firebase, undefined){
 		removeTicket: removeTicket,
 		reportBug: reportBug,
 		changeEmail: changeEmail,
-		changePassword: changePassword
+		changePassword: changePassword,
+		toggleOnOff: toggleOnOff
 	};
 
 })( radio, Firebase );
