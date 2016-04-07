@@ -55,6 +55,8 @@ var app = (function( radio, Firebase, undefined){
 		});
 		ref.app.on("value", function(data){
 			running = data.val().running;
+			view.setStatus(running);
+			radio("Q_RUNNING").broadcast(running);
 			console.log("running is "+ running);
 		});
 	};

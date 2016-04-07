@@ -246,6 +246,21 @@ var view = (function( win, doc, radio, $, undefined ) {
 		}
 	};
 
+	function setStatus(status){
+		console.log("setting status msg");
+		if(status == true){
+			$("#turn-onoff-button").text("Q - turn OFF");
+			$("#take-ticket-button").removeClass("disabled");
+			$("#take-ticket-button").prop("disabled", false);
+			$("#take-ticket-button").text("Take ticket");
+		} else {
+			$("#turn-onoff-button").text("Q - turn ON");
+			$("#take-ticket-button").addClass("disabled");
+			$("#take-ticket-button").prop("disabled", true);
+			$("#take-ticket-button").text("Q is currently turned off");
+		}
+	};
+
 	function setSubscriptions(){
 		radio("LOGGED_OUT").subscribe(function(){
 			displayPage("main");
@@ -287,7 +302,8 @@ var view = (function( win, doc, radio, $, undefined ) {
 
 	return {
 		init: init,
-		hideModals: hideModals
+		hideModals: hideModals,
+		setStatus: setStatus
 	};
 
 })( window, document, radio, jQuery );
