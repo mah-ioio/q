@@ -70,7 +70,7 @@ var screen = (function(win, doc, Firebase, undefined){
 
 	function drawQueue(){
 		$queue.empty();
-			
+			no=0;
 		if (qOn){
 		for(var i = 0; i < queue.length; i++){
 		
